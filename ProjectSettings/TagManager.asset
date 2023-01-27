@@ -3,7 +3,12 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Up Wall
+  - Down Wall
+  - Left Wall
+  - Right Wall
+  - Obstacle
   layers:
   - Default
   - TransparentFX
@@ -40,4 +45,16 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Map
+    uniqueID: 4153627999
+    locked: 0
+  - name: line
+    uniqueID: 1315680869
+    locked: 0
+  - name: Player
+    uniqueID: 1976012919
+    locked: 0
+  - name: bullet
+    uniqueID: 2633880865
     locked: 0

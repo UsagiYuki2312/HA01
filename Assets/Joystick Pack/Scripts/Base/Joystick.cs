@@ -131,7 +131,7 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
 
     public virtual void OnPointerUp(PointerEventData eventData)
     {
-                Debug.Log("JJJJJJJJJJJJJJJJJJJJJJJJJJ:  "+ Direction);
+                Debug.Log("OnPointerUp:  "+ Direction);
         input = Vector2.zero;
         handle.anchoredPosition = Vector2.zero;
     }

@@ -43,7 +43,6 @@ SpriteAtlas:
     secondaryTextureSettings: {}
     variantMultiplier: 1
     packables: []
-    totalSpriteSurfaceArea: 0
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
@@ -51,5 +50,5 @@ SpriteAtlas:
   m_PackedSprites: []
   m_PackedSpriteNamesToIndex: []
   m_RenderDataMap: {}
-  m_Tag: MonsterAtlas
+  m_Tag: PetAtlas
   m_IsVariant: 0

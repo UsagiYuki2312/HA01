@@ -23,11 +23,10 @@ public class SPlayerSkillController : MonoBehaviour
     public GameObject spin;
     public SDirectionLine line;
     public SkillController skillController;
-    public const string SKILL_JOYSTICK_PATH = "Prefabs/Skill/";
 
     private void Start()
     {
-        skillPanel = Resources.Load<SSkillJoytickPanel>(SKILL_JOYSTICK_PATH + "SkillPanel");
+        skillPanel = SGameInstance.Instance.skillJoytickPanel;
         skillController = new SkillController();
         skillController.Init();
     }

@@ -30,7 +30,6 @@ public class SLoading : MonoBehaviour
 
     IEnumerator RunLoading()
     {
-        //videoPlayer.Play();
         yield return delayLoading;
         AsyncOperation operation = SceneManager.LoadSceneAsync("Main");
     }

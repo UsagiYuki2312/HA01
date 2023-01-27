@@ -10,8 +10,8 @@ public class SGameStartUI : SGameUI
 
     private void Awake()
     {
-        GameInstance.gameEvent.OnResumeBattleClicked = ResumePlaying;
-        GameInstance.gameEvent.OnTrialBattleClicked = StartPlaying;
+        //GameInstance.gameEvent.OnResumeBattleClicked = ResumePlaying;
+        //GameInstance.gameEvent.OnTrialBattleClicked = StartPlaying;
     }
 
     private void Start()

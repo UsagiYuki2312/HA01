@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using Pixelplacement;
+using Cinemachine;
 
 public class SGameInstance : Singleton<SGameInstance>
 {
@@ -15,13 +16,25 @@ public class SGameInstance : Singleton<SGameInstance>
     public bool isSavingAvailable = true;
     public SAlien[] aliens = new SAlien[7];
     public ButtonAttackController buttonAttackController;
+    public FixedJoystick floatingJoystick;
+    public SSkillJoytickPanel skillJoytickPanel;
+    public CinemachineVirtualCamera cinemachineCamera;
+    private static SGameInstance instance = null;
     private void Awake()
     {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+            Destroy(gameObject);
+
         MonoUtility.SetTimeScale(1, this);
         alienDictionary = new Dictionary<int, SAlien>();
         gameEvent = new GameEvent();
         neighbourPositions = new NeighbourPositions(Camera.main);
-        AddAlien();
+        //AddAlien();
         buttonAttackController = new ButtonAttackController();
     }
 

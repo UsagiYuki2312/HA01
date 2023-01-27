@@ -13,7 +13,7 @@ public class SpinSkill : ActiveSkill
     public SpinSkill() : base()
     {
         skillType = SkillType.FirstSkill;
-        spinPrefabs = Resources.Load<SBullet>("Prefabs/Skill/AiriSkill/" + "pin");
+        spinPrefabs = Resources.Load<SBullet>("Prefabs/Skill/AiriSkill/" + "Spin");
         bulletPool = new UDynamicPool<SBullet>(spinPrefabs, new Vector3(0, -10, 0), 5, 100);
         iconSkill = Resources.Load<Texture>("Textures/Skill/" + "11");
     }

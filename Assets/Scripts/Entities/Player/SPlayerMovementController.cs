@@ -13,15 +13,17 @@ public class SPlayerMovementController : MonoBehaviour
     [HideInInspector] public PlayerProperties playerProperties;
     private float countValue;
     private float rotateAngle;
-    private bool isRunning;
+    [SerializeField] private bool isRunning;
     public bool isClickGoTo;
     public Vector3 targetGoTo;
-    [SerializeField] private Rigidbody rigidbody;
     public const string JOYSTICK_PATH = "Prefabs/Joystick/";
+
+    public bool isCollidedWithUpWall, isCollidedWithDownWall;
+    public bool isCollidedWithLeftWall, isCollidedWithRightWall;
+    public bool isCollidedWithObstacle;
     private void Start()
     {
-        floatingJoystick = Resources.Load<FixedJoystick>(JOYSTICK_PATH + "Fixed Joystick");
-        animator = GetComponentInChildren<Animator>();
+        floatingJoystick = SGameInstance.Instance.floatingJoystick;
     }
 
     public void CreateJoystick(RectTransform joystickZone)
@@ -33,7 +35,9 @@ public class SPlayerMovementController : MonoBehaviour
     void Update()
     {
         joyStickDir = floatingJoystick.Direction;
-        isRunning = MoveToDir(joyStickDir);
+        CalculateDirection(joyStickDir);
+        //CalculateDirectionObstacle(joyStickDir);
+        isRunning = MoveToDir(moveDirection);
         if (isClickGoTo)
         {
             GoToTarget(targetGoTo);
@@ -47,18 +51,15 @@ public class SPlayerMovementController : MonoBehaviour
     private bool MoveToDir(Vector2 dir)
     {
         if (dir.sqrMagnitude < 0.1f) return false;
-        transform.Translate(dir * playerProperties.speed * Time.deltaTime, Space.World);
+        transform.Translate(dir * 10 * Time.deltaTime, Space.World);
         return true;
     }
 
-    private void CalculateDirection()
-    {
-        moveDirection = transform.forward;
-    }
     public void GoToTarget(Vector3 dir)
     {
         transform.Translate(MiniumVector(dir) * playerProperties.speed * Time.deltaTime, Space.World);
     }
+
     public Vector3 ConvertVector(Vector3 dir)
     {
         float directionX = 0;
@@ -122,6 +123,24 @@ public class SPlayerMovementController : MonoBehaviour
         }
         Debug.Log("ConvertVector: " + goToDirection);
         return goToDirection;
+    }
+
+    private void CalculateDirection(Vector3 dir)
+    {
+        moveDirection = dir;
+        moveDirection.z = 0;
+        if (isCollidedWithUpWall && moveDirection.y > 0) moveDirection.y = 0;
+        if (isCollidedWithDownWall && moveDirection.y < 0) moveDirection.y = 0;
+        if (isCollidedWithLeftWall && moveDirection.x < 0) moveDirection.x = 0;
+        if (isCollidedWithRightWall && moveDirection.x > 0) moveDirection.x = 0;
+    }
+
+    private void CalculateDirectionObstacle(Vector3 dir)
+    {
+        moveDirection = dir;
+        moveDirection.z = 0;
+        if (isCollidedWithObstacle && Mathf.Abs(moveDirection.x)>=Mathf.Abs(moveDirection.y)) moveDirection.x = 0;
+        if (isCollidedWithObstacle && Mathf.Abs(moveDirection.x)<Mathf.Abs(moveDirection.y)) moveDirection.y = 0;
     }
 
 }
