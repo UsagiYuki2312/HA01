@@ -4,18 +4,18 @@
         "player2",
         "player3"
     ],
-    "health": [
-        10,
+    "baseHealth": [
+        35,
         8,
         15
     ],
-    "speed": [
-        10,
+    "baseSpeed": [
+        9,
         10,
         10
     ],
-    "damageToPlayer": [
-        3,
+    "damageToMonster": [
+        5,
         6,
         10
     ]

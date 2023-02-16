@@ -12,22 +12,28 @@ public class SPlayer : MonoBehaviourCore
     public Rigidbody2D playerRigid;
     public SFollower follower;
     public SAlienSensor alienSensor;
+    public DamageReceiver damageReceiver;
     public Action OnMovementDelayEnd;
     private void Awake()
     {
+        damageReceiver = new DamageReceiver(playerProperties);
+        damageReceiver.OnCharacterDie = OnPlayerDie;
+        damageReceiver.OnCharacterTakeDamage += OnPlayerTakeDamage;
+
         movementComponent = GetComponent<SPlayerMovementController>();
         skillComponent = GetComponent<SPlayerSkillController>();
         //alienSensor = GetComponentInChildren<SAlienSensor>();
         playerRigid = GetComponent<Rigidbody2D>();
-        //movementComponent.playerProperties = playerProperties;
+        movementComponent.playerProperties = playerProperties;
     }
 
-    // private void Start()
-    // {
-    //     playerProperties.CalculateProperties();
-    //     SGameInstance.Instance.gameEvent.OnPlayerUseSkill = StopMovement;
-    //     OnMovementDelayEnd = EnableMovement;
-    // }
+    private void Start()
+    {
+        Debug.Log("Add properties");
+        playerProperties.CalculateProperties();
+        //SGameInstance.Instance.gameEvent.OnPlayerUseSkill = StopMovement;
+        //OnMovementDelayEnd = EnableMovement;
+    }
     // private void Update()
     // {
     //     if (alienSensor.closestDistance <= 2 || alienSensor.closestAliens == null || alienSensor.closestDistance >= 40f)
@@ -56,14 +62,31 @@ public class SPlayer : MonoBehaviourCore
     {
         canDash = false;
         isDashing = true;
-        transform.Translate(dir*2);
+        transform.Translate(dir * 2);
         isDashing = false;
         //playerRigid.velocity = Vector3.zero;
         yield return new WaitForSeconds(dashingCooldown);
         canDash = true;
 
     }
-    public void GoDash(Vector3 dir){
+    public void GoDash(Vector3 dir)
+    {
         StartCoroutine(Dash(dir));
+    }
+
+    private void OnPlayerTakeDamage(float totalDamage)
+    {
+        UpdatePlayerHealth(totalDamage);
+    }
+
+    private void UpdatePlayerHealth(float agr)
+    {
+
+
+    }
+
+    private void OnPlayerDie()
+    {
+
     }
 }

@@ -217,6 +217,8 @@ GameObject:
   - component: {fileID: 876728215}
   - component: {fileID: 876728217}
   - component: {fileID: 876728216}
+  - component: {fileID: 876728219}
+  - component: {fileID: 876728218}
   m_Layer: 0
   m_Name: DontDestroyOnLoad
   m_TagString: Untagged
@@ -263,6 +265,43 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55938fb1577dd4ad3af7e994048c86f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &876728218
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 876728214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b288d1f60117fb4584b870751ae6560, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dontDestroyOnLoad: 0
+--- !u!114 &876728219
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 876728214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75125944181f4424494d88404ea1f123, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dontDestroyOnLoad: 0
+  gameData:
+    playerData:
+      name: Player
+      speed: 0
+      health: 0
+    gameStateData:
+      playerHealth: 0
+      totalDefeatedAliens: 0
+      currentTotalSeconds: 0
+      collectingCoins: 0
+      savedEvents: 
 --- !u!1 &1159113426
 GameObject:
   m_ObjectHideFlags: 0

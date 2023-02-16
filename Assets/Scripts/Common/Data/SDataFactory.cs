@@ -16,8 +16,8 @@ public enum SkillType
 public class PlayerConfig
 {
     public string[] name;
-    public float[] health;
-    public float[] speed;
+    public float[] baseHealth;
+    public float[] baseSpeed;
     public float[] damageToMonster;
 }
 
@@ -46,6 +46,28 @@ public class SDataFactory : Singleton<SDataFactory>
                     .text);
     }
 
+    #region Player
+    // public int GetNextLeverExp(int currentLevel)
+    // {
+    //     currentLevel = Mathf.Clamp(currentLevel, 0, playerConfig.levelExperience.Length - 1);
+    //     return playerConfig.levelExperience[currentLevel];
+    // }
+
+    public float GetPlayerBaseHealth()
+    {
+        return playerConfig.baseHealth[0];
+    }
+
+    public float GetPlayerBaseDamage()
+    {
+        return playerConfig.damageToMonster[0];
+    }
+
+    public float GetPlayerBaseSpeed()
+    {
+        return playerConfig.baseSpeed[0];
+    }
+    #endregion
 
     #region Alien
     public int GetAlienHealth(int type)
@@ -71,6 +93,6 @@ public class SDataFactory : Singleton<SDataFactory>
     {
         int index =
                    Mathf.Clamp(type - 1, 0, monsterConfig.damageToPlayer.Length - 1);
-        return playerConfig.speed[index];
+        return playerConfig.baseSpeed[index];
     }
 }

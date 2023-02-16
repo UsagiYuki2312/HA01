@@ -18,12 +18,12 @@ public class PlayerProperties : CharacterProperties
 
     public void CalculateProperties()
     {
-        health += DataController.gameData.playerData.health;
-        damage += damage;
+        health += DataFactory.GetPlayerBaseHealth();
+        damage = DataFactory.GetPlayerBaseDamage();
         baseDamage = damage;
         armor += 1;
-        maxHealth = DataController.gameData.playerData.health;
-        speed = DataFactory.GetSpeedPlayer(1);
+        maxHealth = health;
+        speed = DataFactory.GetPlayerBaseSpeed();
     }
 
     public void UpdateAndCalculateTalentData()
