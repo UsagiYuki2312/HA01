@@ -38,10 +38,10 @@ public class SGameInstance : Singleton<SGameInstance>
         buttonAttackController = new ButtonAttackController();
     }
 
-    public void AddAlien()
+    public void AddAlien(SAlien alien)
     {
-        //  if (!alienDictionary.ContainsKey(alien.transform.GetInstanceID()))
-        // alienDictionary.Add(alien.transform.GetInstanceID(), alien);
+          if (!alienDictionary.ContainsKey(alien.transform.GetInstanceID()))
+         alienDictionary.Add(alien.transform.GetInstanceID(), alien);
         for (int i = 0; i < aliens.Length; i++)
         {
             alienDictionary.Add(aliens[i].transform.GetInstanceID(), aliens[i]);

@@ -8,14 +8,11 @@ public class AlienProperties : CharacterProperties
     public float exp;
     public int addtionalPower;
     public static int addtionalPowerByMinutes;
-
     public void LoadPropertiesOfType(int type)
     {
         speed = DataFactory.GetAlienSpeed(type);
         damage = DataFactory.GetDamageToPlayer(type);
         health = DataFactory.GetAlienHealth(type);
-
-        health = health * addtionalPower * addtionalPowerByMinutes;
     }
 }
 
@@ -23,11 +20,10 @@ public class AlienProperties : CharacterProperties
 public class SAlien : MonoBehaviourCore
 {
     public AlienProperties alienProperties;
-    // public SDpsAttacker characterDps;
-    // public SMovement movement;
-    // public SSpritePingPong spritePingPong;
-    // public DamageReceiver damageReceiver;
-    public Animator animator;
+    public SDpsAttacker characterDps;
+    public SMovement movement;
+    public SBaseDpsReceiver[] dpsReceivers;
+    public Vector3 dirMove;
     // public SBaseDpsReceiver[] dpsReceivers;
     // private static FireBallAlienSkill fireBallAlienSkill;
     // private static FireBallAlienSkill FireBallAlienSkill
@@ -41,16 +37,14 @@ public class SAlien : MonoBehaviourCore
 
     protected virtual void Reset()
     {
-        // movement = GetComponent<SMovement>();
-        // animator = GetComponentInChildren<Animator>();
-        // characterDps = GetComponentInChildren<SDpsAttacker>();
-        // dpsReceivers = GetComponentsInChildren<SBaseDpsReceiver>();
-        // spritePingPong = GetComponentInChildren<SSpritePingPong>();
+        movement = GetComponent<SMovement>();
+        characterDps = GetComponentInChildren<SDpsAttacker>();
+        dpsReceivers = GetComponentsInChildren<SBaseDpsReceiver>();
     }
 
     protected virtual void Start()
     {
-        SettingSAlien();
+        //SettingSAlien();
     }
 
     protected void SettingSAlien()
@@ -65,6 +59,12 @@ public class SAlien : MonoBehaviourCore
         //     dpsReceivers[i].damageReceiver = damageReceiver;
     }
 
+    public virtual void ChangeType(int type)
+    {
+        alienProperties.LoadPropertiesOfType(type);
+        movement.defaultSpeed = alienProperties.speed;
+    }
+
     protected virtual void SetDamageReceiver()
     {
         // damageReceiver = new DamageReceiver(alienProperties);
@@ -72,5 +72,25 @@ public class SAlien : MonoBehaviourCore
     protected virtual void OnEnable()
     {
 
+    }
+
+    private void BossMovement()
+    {
+        StartCoroutine(MoveInWave());
+    }
+    private IEnumerator MoveInWave()
+    {
+        while (true)
+        {
+            //dirMove = GetRandomDir();
+            dirMove = SGameInstance.Instance.player.transform.position - transform.position;
+            yield return new WaitForSeconds(1f);
+            dirMove = Vector3.zero;
+            yield return new WaitForSeconds(2f);
+        }
+    }
+        protected void Update()
+    {
+        transform.Translate(dirMove * 0.005f);
     }
 }

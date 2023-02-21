@@ -10,6 +10,7 @@ public class GamePlayState : State
     public SPlayer player;
     public GameObject wall;
     public GameObject boss;
+    private AlienController alienController;
     public const string UI_PATH = "Prefabs/UI/";
     public const string PLAYER_PATH = "Prefabs/Player/";
     public const string WALL_PATH = "Prefabs/Obstacle/";
@@ -52,5 +53,10 @@ public class GamePlayState : State
         wall = Instantiate(wall);
         boss = Instantiate(boss);
         SGameInstance.Instance.cinemachineCamera.Follow = SGameInstance.Instance.player.transform;
+
+        alienController = new AlienController(player.transform, 1);
+        alienController.Init();
+        alienController.StartSpawning();
     }
+
 }
