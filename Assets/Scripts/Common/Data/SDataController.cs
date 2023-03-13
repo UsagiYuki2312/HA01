@@ -10,7 +10,7 @@ public class SDataController : Singleton<SDataController>
     private string dataPath = "";
 
     public GameData gameData;
-
+    public GameStateData GameStateData => gameData.gameStateData;
     public PlayerData PlayerData => gameData.playerData;
 
     protected override void OnRegistration()
@@ -74,13 +74,11 @@ public class GameStateData
     public float playerHealth;
     public int totalDefeatedAliens;
     public int currentTotalSeconds;
-    public int collectingCoins;
     public List<int> savedEvents;
 
     public GameStateData()
     {
         playerHealth = 0;
-        collectingCoins = 0;
         savedEvents = new List<int>(20);
     }
     public void SaveEvent(int eventID)
@@ -93,13 +91,9 @@ public class GameStateData
 public class PlayerData
 {
     public string name;
-    public float speed;
-    public float health;
     public PlayerData()
     {
         name = "Player";
-        speed = 5f;
-        health = 200f;
     }
 }
 

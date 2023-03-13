@@ -22,18 +22,9 @@ public class SAlien : MonoBehaviourCore
     public AlienProperties alienProperties;
     public SDpsAttacker characterDps;
     public SMovement movement;
+    public DamageReceiver damageReceiver;
     public SBaseDpsReceiver[] dpsReceivers;
     public Vector3 dirMove;
-    // public SBaseDpsReceiver[] dpsReceivers;
-    // private static FireBallAlienSkill fireBallAlienSkill;
-    // private static FireBallAlienSkill FireBallAlienSkill
-    // {
-    //     get
-    //     {
-    //         if (fireBallAlienSkill == null) fireBallAlienSkill = SGameInstance.Instance.fireBallAlienSkill;
-    //         return fireBallAlienSkill;
-    //     }
-    // }
 
     protected virtual void Reset()
     {
@@ -44,16 +35,16 @@ public class SAlien : MonoBehaviourCore
 
     protected virtual void Start()
     {
-        //SettingSAlien();
+        SettingSAlien();
     }
 
     protected void SettingSAlien()
     {
         SetDamageReceiver();
-        // damageReceiver.OnCharacterDie = OnAlienDie;
-        // damageReceiver.OnCharacterTakeDamage = OnAlienTakeDamage;
-        // movement.characterProperties = alienProperties;
-        // characterDps.characterProperties = alienProperties;
+        damageReceiver.OnCharacterDie = OnAlienDie;
+        damageReceiver.OnCharacterTakeDamage = OnAlienTakeDamage;
+        movement.characterProperties = alienProperties;
+        characterDps.characterProperties = alienProperties;
 
         // for (int i = 0; i < dpsReceivers.Length; i++)
         //     dpsReceivers[i].damageReceiver = damageReceiver;
@@ -67,30 +58,25 @@ public class SAlien : MonoBehaviourCore
 
     protected virtual void SetDamageReceiver()
     {
-        // damageReceiver = new DamageReceiver(alienProperties);
+        damageReceiver = new DamageReceiver(alienProperties);
     }
-    protected virtual void OnEnable()
+    protected virtual void OnAlienTakeDamage(float damage)
     {
+        // if (spritePingPong != null) spritePingPong.TriggerPingPong(damage);
+        // GameInstance.gameEvent.OnAlienTakeDamage?.Invoke(transform.position, damage);
+    }
 
+    protected virtual void OnAlienDie()
+    {
+        // GameInstance.gameEvent.OnAlienDie(transform.position, alienProperties);
+        // if (GameInstance.player.playerProperties.alienExplosionAfterDie)
+        //     GameInstance.gameEvent.OnAlienExplosionTriggered?.Invoke(transform.position);
+        gameObject.SetActive(false);
     }
 
-    private void BossMovement()
+        protected virtual void OnEnable()
     {
-        StartCoroutine(MoveInWave());
+     
     }
-    private IEnumerator MoveInWave()
-    {
-        while (true)
-        {
-            //dirMove = GetRandomDir();
-            dirMove = SGameInstance.Instance.player.transform.position - transform.position;
-            yield return new WaitForSeconds(1f);
-            dirMove = Vector3.zero;
-            yield return new WaitForSeconds(2f);
-        }
-    }
-        protected void Update()
-    {
-        transform.Translate(dirMove * 0.005f);
-    }
+
 }

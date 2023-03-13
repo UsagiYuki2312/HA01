@@ -18,11 +18,11 @@ public class PlayerConfig
     public string[] name;
     public float[] baseHealth;
     public float[] baseSpeed;
-    public float[] damageToMonster;
+    public float[] damage;
 }
 
 [System.Serializable]
-public class MonsterConfig
+public class AlienConfig
 {
     public float[] speed;
     public int[] health;
@@ -32,7 +32,7 @@ public class MonsterConfig
 public class SDataFactory : Singleton<SDataFactory>
 {
     private PlayerConfig playerConfig;
-    private MonsterConfig monsterConfig;
+    private AlienConfig alienConfig;
     void Awake()
     {
         playerConfig =
@@ -40,9 +40,9 @@ public class SDataFactory : Singleton<SDataFactory>
                 .FromJson<PlayerConfig>(Resources
                     .Load<TextAsset>("Json/" + "player_config")
                     .text);
-        monsterConfig = JsonUtility
-                .FromJson<MonsterConfig>(Resources
-                    .Load<TextAsset>("Json/" + "monster_config")
+        alienConfig = JsonUtility
+                .FromJson<AlienConfig>(Resources
+                    .Load<TextAsset>("Json/" + "alien_config")
                     .text);
     }
 
@@ -60,7 +60,7 @@ public class SDataFactory : Singleton<SDataFactory>
 
     public float GetPlayerBaseDamage()
     {
-        return playerConfig.damageToMonster[0];
+        return playerConfig.damage[0];
     }
 
     public float GetPlayerBaseSpeed()
@@ -72,27 +72,27 @@ public class SDataFactory : Singleton<SDataFactory>
     #region Alien
     public int GetAlienHealth(int type)
     {
-        int index = Mathf.Clamp(type - 1, 0, monsterConfig.health.Length - 1);
-        return monsterConfig.health[index];
+        int index = Mathf.Clamp(type - 1, 0, alienConfig.health.Length - 1);
+        return alienConfig.health[index];
     }
 
     public float GetAlienSpeed(int type)
     {
-        int index = Mathf.Clamp(type - 1, 0, monsterConfig.speed.Length - 1);
-        return monsterConfig.speed[index];
+        int index = Mathf.Clamp(type - 1, 0, alienConfig.speed.Length - 1);
+        return alienConfig.speed[index];
     }
 
     public float GetDamageToPlayer(int type)
     {
         int index =
-            Mathf.Clamp(type - 1, 0, monsterConfig.damageToPlayer.Length - 1);
-        return monsterConfig.damageToPlayer[index];
+            Mathf.Clamp(type - 1, 0, alienConfig.damageToPlayer.Length - 1);
+        return alienConfig.damageToPlayer[index];
     }
     #endregion
     public float GetSpeedPlayer(int type)
     {
         int index =
-                   Mathf.Clamp(type - 1, 0, monsterConfig.damageToPlayer.Length - 1);
+                   Mathf.Clamp(type - 1, 0, alienConfig.damageToPlayer.Length - 1);
         return playerConfig.baseSpeed[index];
     }
 }

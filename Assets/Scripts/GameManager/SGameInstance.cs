@@ -30,7 +30,7 @@ public class SGameInstance : Singleton<SGameInstance>
         else
             Destroy(gameObject);
 
-        MonoUtility.SetTimeScale(1, this);
+        this.SetTimeScale(1);
         alienDictionary = new Dictionary<int, SAlien>();
         gameEvent = new GameEvent();
         neighbourPositions = new NeighbourPositions(Camera.main);

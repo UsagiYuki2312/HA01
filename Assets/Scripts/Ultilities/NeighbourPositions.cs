@@ -41,10 +41,6 @@ public class NeighbourPositions
         return directions[index] * range;
     }
 
-    public Quaternion PickRandomForwardAngle()
-    {
-        return MonoUtility.PickRandomMemberOf<Quaternion>(ref forwardAngles);
-    }
 
     public Vector3 GetNeighbourPos(float range)
     {

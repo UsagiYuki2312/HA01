@@ -1,18 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using Pixelplacement;
 
-public class GameWinState : MonoBehaviour
+public class GameWinState : State
 {
-    // Start is called before the first frame update
-    void Start()
+    private SGameWinUI gameWinUI;
+    protected virtual void Start()
     {
-        
+        gameWinUI = Resources.Load<SGameWinUI>("Prefabs/UI/"  + "GameWin");
+
+        gameWinUI = Instantiate(gameWinUI);
+        gameWinUI.OnReturnClick = GetRewardAndLoadScene;
+
     }
 
-    // Update is called once per frame
-    void Update()
+    public void GetRewardAndLoadScene()
     {
-        
+        SceneManager.LoadScene("Main");
     }
+
 }

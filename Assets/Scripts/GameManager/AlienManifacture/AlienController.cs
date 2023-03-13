@@ -38,6 +38,14 @@ public class AlienController : ClassInstanceCore
         alienSpawner = new AlienSpawner(target, alienPool, 1);
     }
 
+    public void ResolveGameStateData()
+    {
+        List<int> savedEvents = DataController.GameStateData.savedEvents;
+        if (savedEvents.Count == 0) return;
+
+        //for (int i = 0; i < savedEvents.Count; i++) TriggerEvent(savedEvents[i], false);
+    }
+
 
     public void StartSpawning()
     {

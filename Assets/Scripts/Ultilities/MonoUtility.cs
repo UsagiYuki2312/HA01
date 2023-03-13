@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MonoUtility
+public static class MonoUtility
 {
     #region "Transform"
     public static List<Vector3> CreateListOfCirclePos(float radius, int numberOfPosition, Vector3 offset)
@@ -31,40 +31,51 @@ public class MonoUtility
     #endregion
 
     #region "ArrayNList"
-    public static T PickRandomMemberOf<T>(ref List<T> list)
+    /// <summary>
+    /// Return a random member of list
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="list"></param>
+    /// <returns></returns>
+    public static T Random<T>(this List<T> list)
     {
-        return list[Random.Range(0, list.Count)];
+        return list[UnityEngine.Random.Range(0, list.Count)];
     }
 
-    public static int PickRandomMemberOf(ref int[] array)
+    /// <summary>
+    /// Return a random member of array
+    /// </summary>
+    /// <param name="array"></param>
+    /// <returns></returns>
+    public static T Random<T>(this T[] array)
     {
-        return array[Random.Range(0, array.Length)];
+        return array[UnityEngine.Random.Range(0, array.Length)];
     }
 
-    public static void Shuffle<T>(ref List<T> list, int number)
+    public static void Shuffle<T>(this List<T> list)
     {
         int index;
         int maxCount = list.Count;
         T temp;
-        for (int i = 0; i < number; i++)
+        for (int i = list.Count - 1; i >= 1; i--)
         {
-            index = Random.Range(0, maxCount);
-            temp = list[0];
-            list[0] = list[index];
+            index = UnityEngine.Random.Range(0, i);
+            temp = list[i];
+            list[i] = list[index];
             list[index] = temp;
         }
     }
 
-    public static void Shuffle<T>(ref T[] list, int number)
+    public static void Shuffle<T>(this T[] list)
     {
         int index;
         int maxCount = list.Length;
         T temp;
-        for (int i = 0; i < number; i++)
+        for (int i = list.Length - 1; i >= 1; i--)
         {
-            index = Random.Range(0, maxCount);
-            temp = list[0];
-            list[0] = list[index];
+            index = UnityEngine.Random.Range(0, i);
+            temp = list[i];
+            list[i] = list[index];
             list[index] = temp;
         }
     }
@@ -72,10 +83,10 @@ public class MonoUtility
     #endregion
 
     #region "Time"
-    public static void SetTimeScale(int timeScaleValue, object origion)
+    public static void SetTimeScale<T>(this T monobehaviour, int timeScaleValue)
     {
         Time.timeScale = timeScaleValue;
-        Debug.Log($"Timescale is set to {timeScaleValue} by {origion.GetType()}");
+        Debug.Log($"Timescale is set to {timeScaleValue} by {monobehaviour.GetType()}");
     }
 
     #endregion
@@ -84,16 +95,15 @@ public class MonoUtility
     public static bool GetTrueByRate(int rate)
     {
         if (rate >= 100) return true;
-        return Random.Range(1, 101) <= rate;
+        return UnityEngine.Random.Range(1, 101) <= rate;
     }
 
     public static bool GetTrueByRate(float rate)
     {
         if (rate >= 100) return true;
-        return Random.Range(0.1f, 100) <= rate;
+        return UnityEngine.Random.Range(0.1f, 100) <= rate;
     }
     #endregion
-
 
     #region Color Maker
     public static string AddColor(int content, string hexaColor)

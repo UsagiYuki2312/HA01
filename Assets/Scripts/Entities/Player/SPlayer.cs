@@ -29,28 +29,10 @@ public class SPlayer : MonoBehaviourCore
 
     private void Start()
     {
-        Debug.Log("Add properties");
         playerProperties.CalculateProperties();
         //SGameInstance.Instance.gameEvent.OnPlayerUseSkill = StopMovement;
         //OnMovementDelayEnd = EnableMovement;
     }
-    // private void Update()
-    // {
-    //     if (alienSensor.closestDistance <= 2 || alienSensor.closestAliens == null || alienSensor.closestDistance >= 40f)
-    //     {
-    //         movementComponent.isClickGoTo = false;
-    //         movementComponent.targetGoTo = Vector3.zero;
-    //     }
-    // }
-    // private void StopMovement()
-    // {
-    //     movementComponent.enabled = false;
-    //     DelayCallAction(OnMovementDelayEnd, 0.5f);
-    // }
-    // private void EnableMovement()
-    // {
-    //     movementComponent.enabled = true;
-    // }
     //=========================DASH================
     private bool canDash = true;
     private bool isDashing;
@@ -79,14 +61,32 @@ public class SPlayer : MonoBehaviourCore
         UpdatePlayerHealth(totalDamage);
     }
 
-    private void UpdatePlayerHealth(float agr)
-    {
-
-
-    }
 
     private void OnPlayerDie()
     {
-
+        CheckAndTriggerDieLogic();
     }
+
+    public void SetupDependencies(GameStateData gameStateData)
+    {
+        playerProperties.health = gameStateData.playerHealth == 0 ? playerProperties.maxHealth : gameStateData.playerHealth;
+    }
+
+    private void CheckAndTriggerDieLogic()
+    {
+        MessageManager.SendMessage(new Message(TeeMessageType.OnPlayerDie));
+    }
+
+        public void EnableBehaviours(bool isEnable)
+    {
+        movementComponent.floatingJoystick.gameObject.SetActive(isEnable);
+        movementComponent.enabled = isEnable;
+        damageReceiver.isAttackable = isEnable;
+    }
+
+        private void UpdatePlayerHealth(float agr)
+    {
+        DataController.GameStateData.playerHealth = playerProperties.health;
+    }
+    
 }

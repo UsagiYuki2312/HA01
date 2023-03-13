@@ -5,7 +5,8 @@ using UnityEngine.Events;
 
 public class GameEvent
 {
-    public UnityAction<Vector3, MonsterConfig> OnAlienDie;
+    public UnityAction<Vector3, AlienProperties> OnAlienDie;
+    public UnityAction<SBoss> OnBossDie;
     public UnityAction OnCameraZoomOut;
     public UnityAction<Vector3, float> OnMonsterTakeDamage;
     public UnityAction OnBossSpawned;

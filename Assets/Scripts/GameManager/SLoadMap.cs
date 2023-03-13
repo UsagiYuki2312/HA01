@@ -13,7 +13,7 @@ public class SLoadMap : MonoBehaviour
 
     public void LoadMap()
     {
-        MonoUtility.SetTimeScale(1, this);
+        this.SetTimeScale(1);
         Loading();
     }
 

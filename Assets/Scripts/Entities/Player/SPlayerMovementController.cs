@@ -36,7 +36,6 @@ public class SPlayerMovementController : MonoBehaviour
     {
         joyStickDir = floatingJoystick.Direction;
         CalculateDirection(joyStickDir);
-        //CalculateDirectionObstacle(joyStickDir);
         isRunning = MoveToDir(moveDirection);
         if (isClickGoTo)
         {

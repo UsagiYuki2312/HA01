@@ -14,7 +14,7 @@ public class SLoading : MonoBehaviour
 
     private void Awake()
     {
-        MonoUtility.SetTimeScale(1, this);
+        this.SetTimeScale(1);
         Loading();
     }
 

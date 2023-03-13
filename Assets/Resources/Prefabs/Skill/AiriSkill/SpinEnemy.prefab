@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5149319302689920176}
   - component: {fileID: 762570093834460339}
   - component: {fileID: 3889227003247011666}
+  - component: {fileID: 7741792605187982402}
   m_Layer: 0
   m_Name: SpinEnemy
   m_TagString: Untagged
@@ -70,7 +71,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1661086431
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 4372183795415580521, guid: 2bb965c22fad3c341a60b5259b24495e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -96,3 +97,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0
+--- !u!70 &7741792605187982402
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9019635072942287971}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 0.16, y: 0.27}
+  m_Direction: 0

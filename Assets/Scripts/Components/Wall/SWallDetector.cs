@@ -20,7 +20,6 @@ public class SWallDetector : MonoBehaviour
         if (other.CompareTag(RIGHT_WALL)) playerMovementController.isCollidedWithRightWall = true;
         if (other.CompareTag(OBSTACLE))
         {
-              Debug.Log("trigger0");
             playerMovementController.isCollidedWithObstacle = true;
             // Vector3 dir = other.transform.position - transform.position;
             // if (Mathf.Abs(dir.x) >= Mathf.Abs(dir.y))
