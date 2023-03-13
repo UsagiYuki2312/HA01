@@ -23,14 +23,14 @@ public class SAlien : MonoBehaviourCore
     public SDpsAttacker characterDps;
     public SMovement movement;
     public DamageReceiver damageReceiver;
-    public SBaseDpsReceiver[] dpsReceivers;
+    //public SBaseDpsReceiver[] dpsReceivers;
     public Vector3 dirMove;
 
     protected virtual void Reset()
     {
         movement = GetComponent<SMovement>();
         characterDps = GetComponentInChildren<SDpsAttacker>();
-        dpsReceivers = GetComponentsInChildren<SBaseDpsReceiver>();
+        //dpsReceivers = GetComponentsInChildren<SBaseDpsReceiver>();
     }
 
     protected virtual void Start()
@@ -43,7 +43,7 @@ public class SAlien : MonoBehaviourCore
         SetDamageReceiver();
         damageReceiver.OnCharacterDie = OnAlienDie;
         damageReceiver.OnCharacterTakeDamage = OnAlienTakeDamage;
-        movement.characterProperties = alienProperties;
+        //movement.characterProperties = alienProperties;
         characterDps.characterProperties = alienProperties;
 
         // for (int i = 0; i < dpsReceivers.Length; i++)

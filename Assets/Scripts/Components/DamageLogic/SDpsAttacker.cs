@@ -9,12 +9,16 @@ public class SDpsAttacker : MonoBehaviourCore
     public static bool isAttackable = true;
     private float attackTime;
 
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerStay2D(Collider2D other)
     {
+
         if (isAttackable && Time.time >= attackTime)
         {
-            if (targetDamageReceiver == null) targetDamageReceiver = other.gameObject.GetComponent<SPlayer>().damageReceiver;
-            targetDamageReceiver.TakeDamage(characterProperties.damage);
+            if (targetDamageReceiver == null)
+            {
+                targetDamageReceiver = other.gameObject.GetComponent<SPlayer>().damageReceiver;
+            }
+                            targetDamageReceiver.TakeDamage(5);
             attackTime = Time.time + 0.2f;
         }
     }

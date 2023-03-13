@@ -35,7 +35,6 @@ public class SWallDetector : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        Debug.Log("trigger0");
         if (other.CompareTag(UP_WALL)) playerMovementController.isCollidedWithUpWall = false;
         if (other.CompareTag(DOWN_WALL)) playerMovementController.isCollidedWithDownWall = false;
         if (other.CompareTag(LEFT_WALL)) playerMovementController.isCollidedWithLeftWall = false;

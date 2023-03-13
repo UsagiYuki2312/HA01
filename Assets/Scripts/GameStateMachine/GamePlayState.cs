@@ -22,10 +22,10 @@ public class GamePlayState : State, IMessageHandle
         switch (message.type)
         {
             case TeeMessageType.OnPlayerDie:
-                this.SetTimeScale(1);
-                player.EnableBehaviours(false);
-                alienController.StopSpawning();
-                ChangeState("GameLoseState");
+                //this.SetTimeScale(1);
+                //player.EnableBehaviours(false);
+                //alienController.StopSpawning();
+                //ChangeState("GameLoseState");
                 break;
             case TeeMessageType.OnPauseButtonClicked:
                 this.SetTimeScale(0);

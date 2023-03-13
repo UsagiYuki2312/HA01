@@ -43,7 +43,7 @@ public class SBoss : SAlien
     {
         while (true)
         {
-            UseSkill();
+            //UseSkill();
             yield return new WaitForSeconds(2f);
         }
     }
