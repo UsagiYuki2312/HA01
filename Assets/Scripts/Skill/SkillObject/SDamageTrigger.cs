@@ -21,7 +21,7 @@ public class SDamageTrigger : MonoBehaviour
     {
         if (other.CompareTag("Alien"))
         {
-            // targetedAlien = GameInstance.GetAlienReference(other.transform.GetInstanceID());
+            targetedAlien = SGameInstance.Instance.GetAlienReference(other.transform.GetInstanceID());
             // if (deadzone)
             // {
             //     float health = targetedAlien.alienProperties.health;
@@ -29,8 +29,8 @@ public class SDamageTrigger : MonoBehaviour
             //     return;
             // }
 
-            //power = CalculatePower(power);
-            //targetedAlien.damageReceiver.TakeDamage(power);
+            power = CalculatePower(power);
+            targetedAlien.damageReceiver.TakeDamage(power);
             OnAlienTouched?.Invoke();
         }
     }

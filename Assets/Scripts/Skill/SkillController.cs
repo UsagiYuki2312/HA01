@@ -11,9 +11,17 @@ public class SkillController
         skills = new List<ActiveSkill>();
         skills.Add(new SpinSkill());
         skills.Add(new ShadowSkill());
+        skills.Add(new NormalSkill());
 
         skills[0].SpawnSkillObjects();
         skills[0].UpdateCoolDown();
+        skills[2].SpawnSkillObjects();
+        skills[2].UpdateCoolDown();
+    }
+
+    public void UseNormalAttack()
+    {
+
     }
     public void UseFirstSkill(Vector3 position, Quaternion rotation)
     {
@@ -23,7 +31,11 @@ public class SkillController
     {
         skills[1].UseSkill(position, rotation);
     }
-    public void UseThirdSkill(Vector3 position, Quaternion rotation)
+    // public void UseThirdSkill(Vector3 position, Quaternion rotation)
+    // {
+    //     skills[2].UseSkill(position, rotation);
+    // }
+    public void UseNormalAttack(Vector3 position, Quaternion rotation)
     {
         skills[2].UseSkill(position, rotation);
     }
@@ -35,7 +47,11 @@ public class SkillController
     {
         return skills[1].baseCooldown;
     }
-    public float GetThirdSkillCoolDown()
+    // public float GetThirdSkillCoolDown()
+    // {
+    //     return skills[2].baseCooldown;
+    // }
+    public float GetNormalAttacklCoolDown()
     {
         return skills[2].baseCooldown;
     }

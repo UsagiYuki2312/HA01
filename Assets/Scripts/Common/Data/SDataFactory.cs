@@ -8,7 +8,8 @@ public enum SkillType
 {
     FirstSkill = 1,
     SecondSkill = 2,
-    UltimateSkill = 3
+    UltimateSkill = 3,
+    NormalAttack = 0
 
 }
 

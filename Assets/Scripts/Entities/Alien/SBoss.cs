@@ -177,11 +177,11 @@ public class SBoss : SAlien
     public override void ChangeType(int type)
     {
         alienProperties.speed = DataFactory.GetBossSpeed();
-        alienProperties.health = DataFactory.GetBossHealthMultiple() * GameInstance.player.playerProperties.level * alienProperties.addtionalPower * 0.01f;
+        alienProperties.health = DataFactory.GetBossHealthMultiple();
 
         alienProperties.damage = DataFactory.GetPlayerBaseHealth()
                 * DataFactory.GetBossCollisionDamageMultiple() *
-                        alienProperties.addtionalPower * 0.01f;
+                        0.01f;
 
         movement.defaultSpeed = alienProperties.speed;
     }

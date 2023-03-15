@@ -17,6 +17,7 @@ public class SPlayerSkillController : MonoBehaviour
     public bool isRotateFirstSkill;
     public bool isRotateSecondSkill;
     public bool isRotateThirdSkill;
+    public IEnumerator normalAttackCo;
     public IEnumerator firstSkillCo;
     public IEnumerator secondSkillCo;
     public IEnumerator thirdSkillCo;
@@ -39,13 +40,13 @@ public class SPlayerSkillController : MonoBehaviour
 
     void Update()
     {
-        dirFirstSkill = skillPanel.joystickControllers[0].joystickSkill.Direction *10;
+        dirFirstSkill = skillPanel.joystickControllers[0].joystickSkill.Direction * 10;
         isRotateFirstSkill = RotateDirFirstSkill(dirFirstSkill);
 
-        dirSeconndSkill = skillPanel.joystickControllers[1].joystickSkill.Direction*10;
+        dirSeconndSkill = skillPanel.joystickControllers[1].joystickSkill.Direction * 10;
         isRotateSecondSkill = RotateDirSecondSkill(dirSeconndSkill);
 
-        dirThirdSkill = skillPanel.joystickControllers[2].joystickSkill.Direction *10;
+        dirThirdSkill = skillPanel.joystickControllers[2].joystickSkill.Direction * 10;
         isRotateThirdSkill = RotateDirThirdSkill(dirThirdSkill);
 
         line.spriteLine[0].SetActive(dirFirstSkill != Vector3.zero);
@@ -61,11 +62,11 @@ public class SPlayerSkillController : MonoBehaviour
 
     private bool RotateDirFirstSkill(Vector2 dir)
     {
-        Vector3 newDir = dir*8;
+        Vector3 newDir = dir * 8;
         if (dir.sqrMagnitude < 0.1f) return false;
 
         rotateAngleFirstSkill = Mathf.Atan2(newDir.x, newDir.y) * Mathf.Rad2Deg;
-        Debug.Log("rotateAngleFirstSkill: "+ rotateAngleFirstSkill);
+        Debug.Log("rotateAngleFirstSkill: " + rotateAngleFirstSkill);
         if (rotateAngleFirstSkill < 0) rotateAngleFirstSkill += 360;
         line.transform.eulerAngles = Vector3.forward * -rotateAngleFirstSkill;
         return true;
@@ -96,6 +97,13 @@ public class SPlayerSkillController : MonoBehaviour
         // GameObject bullet = Instantiate(spin, transform.position, Quaternion.identity);
         Instantiate(spin, line.gameObject.transform.position, line.gameObject.transform.rotation);
     }
+
+    public void UseNormalAttack()
+    {
+        SGameInstance.Instance.gameEvent.OnPlayerUseSkill?.Invoke();
+        skillController.UseNormalAttack(transform.position, transform.rotation);
+        Debug.Log("UseNormalAttack");
+    }
     public void UseFirstSkill()
     {
         SGameInstance.Instance.gameEvent.OnPlayerUseSkill?.Invoke();
@@ -115,6 +123,7 @@ public class SPlayerSkillController : MonoBehaviour
         SGameInstance.Instance.gameEvent.OnPlayerUseSkill?.Invoke();
         //skillController.UseThirdSkill(line.gameObject.transform.position, line.gameObject.transform.rotation);
     }
+
     public void LoadFirstSkill()
     {
         skillPanel.joystickControllers[0].imageSkill.texture = skillController.skills[0].iconSkill;

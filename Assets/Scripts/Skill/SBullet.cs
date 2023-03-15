@@ -6,10 +6,13 @@ public class SBullet : MonoBehaviour
 {
     public float speed; Vector3 dir;
     private Vector3 startPosition;
+    public SDamageTrigger damageTrigger;
     protected virtual void Awake()
     {
         speed = 10;
         startPosition = transform.position;
+        damageTrigger = GetComponent<SDamageTrigger>();
+        //damageTrigger.OnAlienTouched = OnAlienTouched;
     }
     protected virtual void Update()
     {
@@ -30,4 +33,8 @@ public class SBullet : MonoBehaviour
         startPosition = transform.position;
     }
 
+    protected virtual void OnAlienTouched()
+    {
+        gameObject.SetActive(false);
+    }
 }

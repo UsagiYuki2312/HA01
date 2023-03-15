@@ -115,6 +115,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   joystickZone: {fileID: 2217088036210884321}
   skillZone: {fileID: 2217088036210884321}
+  floatingJoystick: {fileID: 0}
+  skillPanel: {fileID: 0}
 --- !u!1 &861647012235510659
 GameObject:
   m_ObjectHideFlags: 0
@@ -198,7 +200,7 @@ GameObject:
   - component: {fileID: 3563041122241128964}
   - component: {fileID: 3907477895948102950}
   - component: {fileID: 3550501206697798831}
-  - component: {fileID: 6395054891659910886}
+  - component: {fileID: 950600316823671511}
   m_Layer: 5
   m_Name: AttackBtn
   m_TagString: Untagged
@@ -264,7 +266,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &6395054891659910886
+--- !u!114 &950600316823671511
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -273,7 +275,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2650714273433065343}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Script: {fileID: 11500000, guid: e396fe545a2e5ac4fa5bcd1190fa01f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:

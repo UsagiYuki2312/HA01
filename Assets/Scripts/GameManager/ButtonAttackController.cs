@@ -37,7 +37,9 @@ public class ButtonAttackController : ClassInstanceCore
     }
     public void OnClickAttackButton()
     {
-        GoToClosetTarget();
+        //GoToClosetTarget();
+        SGameInstance.Instance.player.skillComponent.UseNormalAttack();
+        Debug.Log("Attack button click");
     }
     public void OnClickDialogueButton()
     {

@@ -37,20 +37,20 @@ public class SPlayerMovementController : MonoBehaviour
         joyStickDir = floatingJoystick.Direction;
         CalculateDirection(joyStickDir);
         isRunning = MoveToDir(moveDirection);
-        if (isClickGoTo)
-        {
-            GoToTarget(targetGoTo);
-        }
-        if (joyStickDir != Vector2.zero)
-        {
-            isClickGoTo = false;
-        }
+        // if (isClickGoTo)
+        // {
+        //     GoToTarget(targetGoTo);
+        // }
+        // if (joyStickDir != Vector2.zero)
+        // {
+        //     isClickGoTo = false;
+        // }
     }
 
     private bool MoveToDir(Vector2 dir)
     {
         if (dir.sqrMagnitude < 0.1f) return false;
-        transform.Translate(dir * 10 * Time.deltaTime, Space.World);
+        transform.Translate(dir * playerProperties.speed  * Time.deltaTime, Space.World);
         return true;
     }
 
