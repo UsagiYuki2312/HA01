@@ -43,7 +43,7 @@ public class SAlien : MonoBehaviourCore
         SetDamageReceiver();
         damageReceiver.OnCharacterDie = OnAlienDie;
         damageReceiver.OnCharacterTakeDamage = OnAlienTakeDamage;
-        //movement.characterProperties = alienProperties;
+        movement.characterProperties = alienProperties;
         characterDps.characterProperties = alienProperties;
 
         // for (int i = 0; i < dpsReceivers.Length; i++)

@@ -294,13 +294,10 @@ MonoBehaviour:
   gameData:
     playerData:
       name: Player
-      speed: 0
-      health: 0
     gameStateData:
       playerHealth: 0
       totalDefeatedAliens: 0
       currentTotalSeconds: 0
-      collectingCoins: 0
       savedEvents: 
 --- !u!1 &1159113426
 GameObject:

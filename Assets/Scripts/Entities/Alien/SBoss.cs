@@ -43,7 +43,7 @@ public class SBoss : SAlien
     {
         while (true)
         {
-            //UseSkill();
+            UseSkill();
             yield return new WaitForSeconds(2f);
         }
     }
@@ -168,9 +168,21 @@ public class SBoss : SAlien
         //bossHealthBar.SetValue(alienProperties.health);
     }
 
-        protected override void OnAlienDie()
+    protected override void OnAlienDie()
     {
         base.OnAlienDie();
         //GameInstance.gameEvent.OnBossDefeated?.Invoke(this);
+    }
+
+    public override void ChangeType(int type)
+    {
+        alienProperties.speed = DataFactory.GetBossSpeed();
+        alienProperties.health = DataFactory.GetBossHealthMultiple() * GameInstance.player.playerProperties.level * alienProperties.addtionalPower * 0.01f;
+
+        alienProperties.damage = DataFactory.GetPlayerBaseHealth()
+                * DataFactory.GetBossCollisionDamageMultiple() *
+                        alienProperties.addtionalPower * 0.01f;
+
+        movement.defaultSpeed = alienProperties.speed;
     }
 }

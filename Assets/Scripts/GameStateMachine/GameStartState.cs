@@ -11,6 +11,7 @@ public class GameStartState : State, IMessageHandle
         {
             case TeeMessageType.OnPlayButtonClicked:
                 Destroy(gameStartUI.gameObject);
+                DataController.gameData.ResetGameStateData();
                 SetupScene();
                 Next();
                 break;
@@ -24,6 +25,7 @@ public class GameStartState : State, IMessageHandle
     private void Awake()
     {
         gameStartUI = Resources.Load<SGameStartUI>("Prefabs/UI/" + "GameStart");
+        //continueBattlePopup = Resources.Load<SContinueBattlePopup>(ResourcePath.UI_PATH + "ContinueBattle/ContinueBattlePopup");
         MessageManager.AddSubcriber(TeeMessageType.OnPlayButtonClicked, this);
         MessageManager.AddSubcriber(TeeMessageType.OnResumeButtonClicked, this);
     }

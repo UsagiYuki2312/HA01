@@ -29,10 +29,20 @@ public class AlienConfig
     public float[] damageToPlayer;
 }
 
+[System.Serializable]
+public class BossConfig
+{
+    public float bossHealthMultiple;
+    public float bossSpeed;
+    public float bossCollisionDamageMultiple;
+    public float miniBossDamageMultiple;
+}
+
 public class SDataFactory : Singleton<SDataFactory>
 {
     private PlayerConfig playerConfig;
     private AlienConfig alienConfig;
+    private BossConfig bossConfig;
     void Awake()
     {
         playerConfig =
@@ -43,6 +53,10 @@ public class SDataFactory : Singleton<SDataFactory>
         alienConfig = JsonUtility
                 .FromJson<AlienConfig>(Resources
                     .Load<TextAsset>("Json/" + "alien_config")
+                    .text);
+        bossConfig = JsonUtility
+                .FromJson<BossConfig>(Resources
+                    .Load<TextAsset>("Json/" + "boss_config")
                     .text);
     }
 
@@ -95,4 +109,26 @@ public class SDataFactory : Singleton<SDataFactory>
                    Mathf.Clamp(type - 1, 0, alienConfig.damageToPlayer.Length - 1);
         return playerConfig.baseSpeed[index];
     }
+
+    #region Boss
+    public float GetBossHealthMultiple()
+    {
+        return bossConfig.bossHealthMultiple;
+    }
+
+    public float GetBossSpeed()
+    {
+        return bossConfig.bossSpeed;
+    }
+
+    public float GetBossCollisionDamageMultiple()
+    {
+        return bossConfig.bossCollisionDamageMultiple;
+    }
+
+    public float GetMiniBossDamageMultiple()
+    {
+        return bossConfig.miniBossDamageMultiple;
+    }
+    #endregion
 }

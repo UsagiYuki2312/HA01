@@ -15,27 +15,31 @@ public class AlienController : ClassInstanceCore
     private UDynamicPool<SBoss> bossPool;
     private Action<SAlien> OnEveryAlienCreated;
     private AlienSpawner alienSpawner;
+    private AlienEventSpawner alienEventSpawner;
     //private SceneType sceneType;
     private int[] eventID;
     private int chapter;
 
-    public AlienController(Transform target, int chapter)
+    public AlienController(Transform target)
     {
         alienPrefab = Resources.Load<SAlien>("Prefabs/Alien/" + "Alien");
-        miniBossPrefab = Resources.Load<SMiniBoss>("MiniBoss");
-        bossPrefab = Resources.Load<SBoss>("Boss");
-        linearMoveAlienPrefab = Resources.Load<SAlien>("LinearMoveAlien");
+        //miniBossPrefab = Resources.Load<SMiniBoss>("MiniBoss");
+        bossPrefab = Resources.Load<SBoss>("Prefabs/Boss/" + "Boss");
+        //linearMoveAlienPrefab = Resources.Load<SAlien>("LinearMoveAlien");
         this.target = target;
-        this.chapter = chapter;
-        // sceneType = DataFactory.GetSceneType(chapter);
-        alienPool = new UDynamicPool<SAlien>(alienPrefab, new Vector3(0, -10, 0), 5, 100);
+
     }
 
     public void Init()
     {
         OnEveryAlienCreated = GameInstance.AddAlien;
+        alienPool = new UDynamicPool<SAlien>(alienPrefab, new Vector3(0, -10, 0), 5, 100, OnEveryAlienCreated);
         alienPool.CreateObjects(10);
+        bossPool = new UDynamicPool<SBoss>(bossPrefab, new Vector3(0, -10, 0), 2, 4, OnEveryAlienCreated);
+        bossPool.CreateObjects(4);
+
         alienSpawner = new AlienSpawner(target, alienPool, 1);
+        alienEventSpawner = new AlienEventSpawner(bossPool, target);
     }
 
     public void ResolveGameStateData()
@@ -55,5 +59,44 @@ public class AlienController : ClassInstanceCore
     public void StopSpawning()
     {
         alienSpawner.StopSpawning();
+    }
+
+    public void CheckEvent(int timelineIndex)
+    {
+        TriggerEvent(8);
+    }
+
+    public void TriggerEvent(int eventID, bool saveEvent = true)
+    {
+        switch (eventID)
+        {
+
+            case 8:
+                //GameInstance.gameEvent.OnExplosionSpawned?.Invoke();
+                alienEventSpawner.ControlSpawnBoss(bossPrefab, 1, false, 1);
+                alienSpawner.StopSpawning();
+                GameInstance.gameEvent.OnBossSpawned?.Invoke();
+                break;
+            case 9:
+                //GameInstance.gameEvent.OnExplosionSpawned?.Invoke();
+                alienEventSpawner.ControlSpawnBoss(bossPrefab, 0, false, 1);
+                alienSpawner.StopSpawning();
+                GameInstance.gameEvent.OnBossSpawned?.Invoke();
+                break;
+            case 10:
+                //GameInstance.gameEvent.OnExplosionSpawned?.Invoke();
+                alienEventSpawner.ControlSpawnBoss(bossPrefab, 0, false, 1);
+                alienSpawner.StopSpawning();
+                GameInstance.gameEvent.OnBossSpawned?.Invoke();
+                break;
+            case 13:
+                //GameInstance.gameEvent.OnExplosionSpawned?.Invoke();
+                alienEventSpawner.ControlSpawnBoss(bossPrefab, 5, true, 1);
+                alienSpawner.StopSpawning();
+                GameInstance.gameEvent.OnBossSpawned?.Invoke();
+                break;
+            default:
+                break;
+        }
     }
 }

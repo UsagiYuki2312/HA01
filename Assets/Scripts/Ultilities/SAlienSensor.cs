@@ -5,14 +5,15 @@ using UnityEngine;
 public class SAlienSensor : MonoBehaviourCore
 {
     public SAlien closestAliens;
-    public Collider[] inRangeAliens;
+    public Collider2D[] inRangeAliens;
     public float closestDistance;
     private float distanceToAlien;
     public int amount;
+    public Collider2D alienRang;
 
     private void Awake()
     {
-        inRangeAliens = new Collider[20];
+        inRangeAliens = new Collider2D[20];
     }
 
     // Update is called once per frame
@@ -25,7 +26,15 @@ public class SAlienSensor : MonoBehaviourCore
 
     private void FindAliensInRange()
     {
-        amount = Physics.OverlapSphereNonAlloc(transform.position, 9, inRangeAliens, 1 << 6);
+        //alienRang = Physics2D.OverlapCircle(transform.position, 10, 1 << 10);
+        var contactFilter = new ContactFilter2D();
+        contactFilter.NoFilter();
+        contactFilter.SetLayerMask(LayerMask.GetMask("Alien"));
+        amount = Physics2D.OverlapCircle(transform.position, 10, contactFilter, inRangeAliens);
+        foreach (Collider2D nearbyObject in inRangeAliens)
+        {
+            //Doing stuff here        
+        }
     }
 
     public void PickNearestAlien()

@@ -22,10 +22,10 @@ public class GamePlayState : State, IMessageHandle
         switch (message.type)
         {
             case TeeMessageType.OnPlayerDie:
-                //this.SetTimeScale(1);
-                //player.EnableBehaviours(false);
+                this.SetTimeScale(1);
+                player.EnableBehaviours(false);
                 //alienController.StopSpawning();
-                //ChangeState("GameLoseState");
+                ChangeState("GameLoseState");
                 break;
             case TeeMessageType.OnPauseButtonClicked:
                 this.SetTimeScale(0);
@@ -58,20 +58,21 @@ public class GamePlayState : State, IMessageHandle
 
     IEnumerator RunLoading()
     {
-        AsyncOperation operation = SceneManager.LoadSceneAsync("Level1");
+        //AsyncOperation operation = SceneManager.LoadSceneAsync("Level1");
         yield return new WaitForSeconds(1f);
         gamePlayUI = Instantiate(gamePlayUI);
         player = Instantiate(player);
         player.SetupDependencies(DataController.GameStateData);
         SGameInstance.Instance.player = player;
         wall = Instantiate(wall);
-        boss = Instantiate(boss);
+        //boss = Instantiate(boss);
         SGameInstance.Instance.cinemachineCamera.Follow = SGameInstance.Instance.player.transform;
 
-        alienController = new AlienController(player.transform, 1);
+        alienController = new AlienController(player.transform);
         alienController.Init();
         alienController.ResolveGameStateData();
         alienController.StartSpawning();
+        alienController.CheckEvent(0);
 
         GameInstance.gameEvent.OnBossDie += OnBossDie;
         GameInstance.gameEvent.OnAlienDie += OnAlienDie;
@@ -94,5 +95,23 @@ public class GamePlayState : State, IMessageHandle
         MessageManager.RemoveSubcriber(TeeMessageType.OnPauseButtonClicked, this);
         MessageManager.RemoveSubcriber(TeeMessageType.OnPauseMenuDestroyed, this);
         MessageManager.RemoveSubcriber(TeeMessageType.OnPlayerDie, this);
+    }
+
+    private void OnEveryTotalSecondsPassed(int totalSeconds)
+    {
+        //int timelineIndex = DataFactory.GetTimelineIndex(gameStateData.currentChapter, totalSeconds);
+        //gameStateData.currentTotalSeconds = totalSeconds;
+
+        //CheckAndSpawnBossWarning(totalSeconds);
+        //if (timelineIndex != currentTimelineIndex) // change wave
+        // {
+        //     currentTimelineIndex = timelineIndex;
+        //     alienController.ChangeZombieType(timelineIndex);
+        //     alienController.CheckSpawnSpeed(timelineIndex);
+        //     alienController.CheckEvent(timelineIndex);
+        //     alienController.ChangeNumberOfAlienPerSpawn(timelineIndex);
+        //     GameInstance.gameEvent.OnWaveChange?.Invoke();
+        // }
+        // gamePlayUI.SetTime(totalSeconds);
     }
 }
