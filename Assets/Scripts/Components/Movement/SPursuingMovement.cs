@@ -5,7 +5,6 @@ using UnityEngine;
 public class SPursuingMovement : SMovement
 {
     public Transform target;
-    public Rigidbody rb;
     private Vector3 direction;
 
     protected override void Update()

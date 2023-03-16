@@ -26,7 +26,6 @@ public class AlienSpawner : ClassInstanceCore
         spawnCrowdDelayEachWave = new WaitForSeconds(4);
         spawnCrowdDelay = new WaitForSeconds(0.01f);
         maxNumberOfActiveAliens = 20;
-        Debug.Log("max aliens: " + maxNumberOfActiveAliens);
     }
 
     public void StartSpawning()

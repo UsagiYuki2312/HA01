@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6089907471199597503}
   - component: {fileID: 678918736402668458}
   - component: {fileID: 555770942129290971}
+  - component: {fileID: 4591926930928049369}
   m_Layer: 8
   m_Name: NormalAttackBullet
   m_TagString: Untagged
@@ -111,5 +112,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9c06f41fc785de468ec35233ac57f99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  power: 2
+  power: 50
   deadzone: 0
+--- !u!70 &4591926930928049369
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 25656639619354645}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 0.1, y: 0.07}
+  m_Direction: 0

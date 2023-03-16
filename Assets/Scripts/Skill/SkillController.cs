@@ -19,9 +19,9 @@ public class SkillController
         skills[2].UpdateCoolDown();
     }
 
-    public void UseNormalAttack()
+    public void UseNormalAttack(Vector3 position, Quaternion rotation)
     {
-
+        skills[2].UseSkill(position, rotation);
     }
     public void UseFirstSkill(Vector3 position, Quaternion rotation)
     {
@@ -35,10 +35,6 @@ public class SkillController
     // {
     //     skills[2].UseSkill(position, rotation);
     // }
-    public void UseNormalAttack(Vector3 position, Quaternion rotation)
-    {
-        skills[2].UseSkill(position, rotation);
-    }
     public float GetFirstSkillCoolDown()
     {
         return skills[0].baseCooldown;

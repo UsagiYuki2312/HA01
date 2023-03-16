@@ -27,7 +27,7 @@ public class SNormalAttackObject : MonoBehaviour
         target = alienSensor.closestAliens.transform.position;
         direction = target - transform.position;
         transform.Translate(direction * speed * Time.deltaTime, Space.World);
-          TriggerAutoHide();
+          //TriggerAutoHide();
     }
 
     protected virtual void OnAlienTouched()

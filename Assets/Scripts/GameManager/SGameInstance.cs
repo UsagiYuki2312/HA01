@@ -40,11 +40,7 @@ public class SGameInstance : Singleton<SGameInstance>
     {
         if (!alienDictionary.ContainsKey(alien.transform.GetInstanceID()))
             alienDictionary.Add(alien.transform.GetInstanceID(), alien);
-        // for (int i = 0; i < aliens.Length; i++)
-        // {
-        //     alienDictionary.Add(aliens[i].transform.GetInstanceID(), aliens[i]);
-        // }
-        Debug.Log("Adding Alien" + alienDictionary.Count);
+
     }
 
     public SAlien GetAlienReference(int transformInstanceID)

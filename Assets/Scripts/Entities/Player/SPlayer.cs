@@ -10,6 +10,7 @@ public class SPlayer : MonoBehaviourCore
     public SPlayerMovementController movementComponent;
     public SPlayerSkillController skillComponent;
     public Rigidbody2D playerRigid;
+    public SPlayerGause playerGause;
     public SFollower follower;
     public SAlienSensor alienSensor;
     public DamageReceiver damageReceiver;
@@ -67,9 +68,17 @@ public class SPlayer : MonoBehaviourCore
         CheckAndTriggerDieLogic();
     }
 
-    public void SetupDependencies(GameStateData gameStateData)
+    public void SetupDependencies(GameStateData gameStateData, SPlayerGause playerGause)
     {
-        playerProperties.health = gameStateData.playerHealth == 0 ? playerProperties.maxHealth : gameStateData.playerHealth;
+
+        this.playerGause = playerGause;
+        //playerProperties.health = gameStateData.playerHealth == 0 ? playerProperties.maxHealth : gameStateData.playerHealth;
+        Debug.Log("SetupDependencies health: " + playerProperties.health);
+        Debug.Log("SetupDependencies Max health: " + playerProperties.maxHealth);
+        this.playerGause.SetupHealthBar(playerProperties.maxHealth, this.transform);
+        this.playerGause.SetHealth(playerProperties.health);
+        this.playerGause.SetPosition();
+        this.playerGause.updatePosition = true;
     }
 
     private void CheckAndTriggerDieLogic()
@@ -77,7 +86,7 @@ public class SPlayer : MonoBehaviourCore
         MessageManager.SendMessage(new Message(TeeMessageType.OnPlayerDie));
     }
 
-        public void EnableBehaviours(bool isEnable)
+    public void EnableBehaviours(bool isEnable)
     {
         movementComponent.floatingJoystick.gameObject.SetActive(isEnable);
         movementComponent.enabled = isEnable;
@@ -85,9 +94,19 @@ public class SPlayer : MonoBehaviourCore
         skillComponent.enabled = isEnable;
     }
 
-        private void UpdatePlayerHealth(float agr)
+    private void UpdatePlayerHealth(float agr)
     {
+        playerGause.SetHealth(playerProperties.health);
         DataController.GameStateData.playerHealth = playerProperties.health;
     }
-    
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Debug.Log("SetupDependencies health: " + playerProperties.health);
+            Debug.Log("SetupDependencies Max health: " + playerProperties.maxHealth);
+        }
+    }
+
 }

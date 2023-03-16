@@ -171,7 +171,7 @@ public class SBoss : SAlien
     protected override void OnAlienDie()
     {
         base.OnAlienDie();
-        //GameInstance.gameEvent.OnBossDefeated?.Invoke(this);
+        GameInstance.gameEvent.OnBossDefeated?.Invoke(this);
     }
 
     public override void ChangeType(int type)

@@ -8,6 +8,7 @@ public class SGamePlayUI : SGameUI
     public RectTransform skillZone;
     public FixedJoystick floatingJoystick;
     public SSkillJoytickPanel skillPanel;
+    public SPlayerGause playerGause;
     public const string JOYSTICK_PATH = "Prefabs/Joystick/";
     public const string SKILL_JOYSTICK_PATH = "Prefabs/Skill/";
 

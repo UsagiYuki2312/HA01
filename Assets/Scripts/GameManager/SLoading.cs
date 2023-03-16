@@ -31,6 +31,6 @@ public class SLoading : MonoBehaviour
     IEnumerator RunLoading()
     {
         yield return delayLoading;
-        AsyncOperation operation = SceneManager.LoadSceneAsync("Level1");
+        AsyncOperation operation = SceneManager.LoadSceneAsync("Main");
     }
 }

@@ -1,5 +1,5 @@
 {
-    "bossHealthMultiple": 12000,
+    "bossHealthMultiple": 1000,
     "bossSpeed": 1.8,
     "bossCollisionDamageMultiple": 1.5,
     "miniBossDamageMultiple": 10

@@ -40,7 +40,6 @@ public class GamePlayState : State, IMessageHandle
 
     private void Awake()
     {
-        Debug.Log("Awake Run");
         gamePlayUI = Resources.Load<SGamePlayUI>(UI_PATH + "GamePlay");
         player = Resources.Load<SPlayer>(PLAYER_PATH + "Player");
         wall = Resources.Load<GameObject>(WALL_PATH + "Wall");
@@ -61,23 +60,23 @@ public class GamePlayState : State, IMessageHandle
         //AsyncOperation operation = SceneManager.LoadSceneAsync("Level1");
         yield return new WaitForSeconds(1f);
         gamePlayUI = Instantiate(gamePlayUI);
-        player = Instantiate(player);
-        player.SetupDependencies(DataController.GameStateData);
-        SGameInstance.Instance.player = player;
+        SGameInstance.Instance.player = Instantiate(player);
+        yield return new WaitForSeconds(1f);
+        SGameInstance.Instance.player.SetupDependencies(DataController.GameStateData, gamePlayUI.playerGause);
         wall = Instantiate(wall);
-        //boss = Instantiate(boss);
         SGameInstance.Instance.cinemachineCamera.Follow = SGameInstance.Instance.player.transform;
 
         alienController = new AlienController(player.transform);
         alienController.Init();
         alienController.ResolveGameStateData();
         alienController.StartSpawning();
-        alienController.CheckEvent(0);
+        //alienController.CheckEvent(0); // Event Spawn boss
 
         GameInstance.gameEvent.OnBossDie += OnBossDie;
         GameInstance.gameEvent.OnAlienDie += OnAlienDie;
 
         gameStateData = DataController.GameStateData;
+
     }
 
     private void OnAlienDie(Vector3 position, AlienProperties alienProperties)

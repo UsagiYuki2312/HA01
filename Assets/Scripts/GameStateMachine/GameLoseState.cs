@@ -17,6 +17,6 @@ public class GameLoseState : GameWinState
 
     public void LoadScene()
     {
-        SceneManager.LoadScene("Level1");
+        SceneManager.LoadScene("Main");
     }
 }
