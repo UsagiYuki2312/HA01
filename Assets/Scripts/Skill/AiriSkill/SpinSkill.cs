@@ -31,9 +31,11 @@ public class SpinSkill : ActiveSkill
     private void SpawnBullet<T>(UDynamicPool<T> bulletPool, Vector3 position, Quaternion rotation) where T : SBullet
     {
         choosenBullet = bulletPool.GetObject();
+        choosenBullet.damageTrigger.power = Player.playerProperties.Damage;
         choosenBullet.transform.position = position;
         choosenBullet.transform.rotation = rotation;
         choosenBullet.gameObject.SetActive(true);
+        choosenBullet.TriggerAutoHide();
     }
 
     public override void UseSkill(Vector3 position, Quaternion rotation)

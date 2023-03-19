@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class SGamePlayUI : SGameUI
 {
@@ -9,6 +11,8 @@ public class SGamePlayUI : SGameUI
     public FixedJoystick floatingJoystick;
     public SSkillJoytickPanel skillPanel;
     public SPlayerGause playerGause;
+    
+    public TMP_Text chapterTime;
     public const string JOYSTICK_PATH = "Prefabs/Joystick/";
     public const string SKILL_JOYSTICK_PATH = "Prefabs/Skill/";
 
@@ -26,6 +30,16 @@ public class SGamePlayUI : SGameUI
     public void CreatePanelSkill(RectTransform joystickZone)
     {
         SGameInstance.Instance.skillJoytickPanel = Instantiate(skillPanel, joystickZone);
+    }
+
+        public void SetTime(int totalSeconds)
+    {
+        chapterTime.SetText(Utils.FormatTimeSecond(totalSeconds));
+    }
+
+        public void OnPauseButtonClick()
+    {
+        MessageManager.SendMessage(new Message(TeeMessageType.OnPauseButtonClicked));
     }
 
 }

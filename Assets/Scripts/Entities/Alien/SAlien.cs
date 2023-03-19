@@ -38,19 +38,20 @@ public class SAlien : MonoBehaviourCore
         SettingSAlien();
     }
 
-    protected void SettingSAlien()
+    protected virtual void SettingSAlien()
     {
         SetDamageReceiver();
         damageReceiver.OnCharacterDie = OnAlienDie;
         damageReceiver.OnCharacterTakeDamage = OnAlienTakeDamage;
         movement.characterProperties = alienProperties;
+        movement.typeMove = 1;
         characterDps.characterProperties = alienProperties;
 
         // for (int i = 0; i < dpsReceivers.Length; i++)
         //     dpsReceivers[i].damageReceiver = damageReceiver;
     }
 
-    public virtual void ChangeType(int type)
+    public virtual void ChangeType(int type) //Now this game have only one type
     {
         alienProperties.LoadPropertiesOfType(type);
         movement.defaultSpeed = alienProperties.speed;
@@ -74,9 +75,14 @@ public class SAlien : MonoBehaviourCore
         gameObject.SetActive(false);
     }
 
-        protected virtual void OnEnable()
+    protected virtual void OnEnable()
     {
-     
+        GameInstance.numberOfActiveAliens++;
+    }
+
+    protected virtual void OnDisable()
+    {
+        GameInstance.numberOfActiveAliens--;
     }
 
 }

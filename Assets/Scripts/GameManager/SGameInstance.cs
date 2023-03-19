@@ -19,6 +19,7 @@ public class SGameInstance : Singleton<SGameInstance>
     public SSkillJoytickPanel skillJoytickPanel;
     public CinemachineVirtualCamera cinemachineCamera;
     private static SGameInstance instance = null;
+    public int numberOfActiveAliens;
     private void Awake()
     {
         if (instance == null)

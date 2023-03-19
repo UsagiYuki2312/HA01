@@ -8,10 +8,12 @@ public class AlienController : ClassInstanceCore
 {
     public Transform target;
     public SAlien alienPrefab;
+    public SMeleeAlien meleeAlienPrefab;
     public SMiniBoss miniBossPrefab;
     public SAlien linearMoveAlienPrefab;
     public SBoss bossPrefab;
     private UDynamicPool<SAlien> alienPool;
+    private UDynamicPool<SMeleeAlien> meleeAlienPool;
     private UDynamicPool<SBoss> bossPool;
     private Action<SAlien> OnEveryAlienCreated;
     private AlienSpawner alienSpawner;
@@ -24,6 +26,7 @@ public class AlienController : ClassInstanceCore
     {
         alienPrefab = Resources.Load<SAlien>("Prefabs/Alien/" + "Alien");
         //miniBossPrefab = Resources.Load<SMiniBoss>("MiniBoss");
+        meleeAlienPrefab= Resources.Load<SMeleeAlien>("Prefabs/Alien/" + "MeleeAlien");
         bossPrefab = Resources.Load<SBoss>("Prefabs/Boss/" + "Boss");
         //linearMoveAlienPrefab = Resources.Load<SAlien>("LinearMoveAlien");
         this.target = target;
@@ -34,12 +37,14 @@ public class AlienController : ClassInstanceCore
     {
         OnEveryAlienCreated = GameInstance.AddAlien;
         alienPool = new UDynamicPool<SAlien>(alienPrefab, new Vector3(0, -10, 0), 5, 100, OnEveryAlienCreated);
-        alienPool.CreateObjects(10);
+        alienPool.CreateObjects(50);
+        meleeAlienPool = new UDynamicPool<SMeleeAlien>(meleeAlienPrefab, new Vector3(0, -10, 0), 5, 100, OnEveryAlienCreated);
+        meleeAlienPool.CreateObjects(50);
         bossPool = new UDynamicPool<SBoss>(bossPrefab, new Vector3(0, -10, 0), 2, 4, OnEveryAlienCreated);
         bossPool.CreateObjects(4);
 
-        alienSpawner = new AlienSpawner(target, alienPool, 1);
-        alienEventSpawner = new AlienEventSpawner(bossPool, target);
+        alienSpawner = new AlienSpawner(target, alienPool, meleeAlienPool, 1);
+        //alienEventSpawner = new AlienEventSpawner(bossPool, target);
     }
 
     public void ResolveGameStateData()
@@ -49,7 +54,6 @@ public class AlienController : ClassInstanceCore
 
         //for (int i = 0; i < savedEvents.Count; i++) TriggerEvent(savedEvents[i], false);
     }
-
 
     public void StartSpawning()
     {
@@ -63,14 +67,22 @@ public class AlienController : ClassInstanceCore
 
     public void CheckEvent(int timelineIndex)
     {
-        TriggerEvent(8);
+        TriggerEvent(1);
+    }
+
+    public void ChangeNumberOfAlienPerSpawn(int timelineIndex)
+    {
+        int number = timelineIndex;
+        alienSpawner.numberOfAliensSpawned = number;
     }
 
     public void TriggerEvent(int eventID, bool saveEvent = true)
     {
         switch (eventID)
         {
-
+            case 1:
+                alienSpawner.StartSpawnAliensInCrowd();
+                break;
             case 8:
                 //GameInstance.gameEvent.OnExplosionSpawned?.Invoke();
                 alienEventSpawner.ControlSpawnBoss(bossPrefab, 1, false, 1);

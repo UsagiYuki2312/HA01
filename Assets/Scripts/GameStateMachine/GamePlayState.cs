@@ -7,6 +7,7 @@ using Pixelplacement;
 public class GamePlayState : State, IMessageHandle
 {
     private SGamePlayUI gamePlayUI;
+    private SPauseMenu pauseMenu;
     public SPlayer player;
     public GameObject wall;
     public GameObject boss;
@@ -16,21 +17,24 @@ public class GamePlayState : State, IMessageHandle
     public const string WALL_PATH = "Prefabs/Obstacle/";
     public const string BOSS_PATH = "Prefabs/Boss/";
     private GameStateData gameStateData;
+    private int currentTimelineIndex = -1;
+    private TimeCounter timeCounter;
 
     void IMessageHandle.Handle(Message message)
     {
         switch (message.type)
         {
             case TeeMessageType.OnPlayerDie:
-                this.SetTimeScale(1);
+                this.SetTimeScale(0);
                 player.EnableBehaviours(false);
-                //alienController.StopSpawning();
+                alienController.StopSpawning();
+                timeCounter.StopCounting();
                 ChangeState("GameLoseState");
                 break;
             case TeeMessageType.OnPauseButtonClicked:
                 this.SetTimeScale(0);
-                //SPauseMenu menu = Instantiate(pauseMenu);
-                //menu.Display();
+                SPauseMenu menu = Instantiate(pauseMenu);
+                menu.Display();
                 break;
             case TeeMessageType.OnPauseMenuDestroyed:
                 this.SetTimeScale(1);
@@ -41,6 +45,7 @@ public class GamePlayState : State, IMessageHandle
     private void Awake()
     {
         gamePlayUI = Resources.Load<SGamePlayUI>(UI_PATH + "GamePlay");
+        pauseMenu  = Resources.Load<SPauseMenu>(UI_PATH + "PauseMenu");
         player = Resources.Load<SPlayer>(PLAYER_PATH + "Player");
         wall = Resources.Load<GameObject>(WALL_PATH + "Wall");
         boss = Resources.Load<GameObject>(BOSS_PATH + "Boss");
@@ -75,6 +80,14 @@ public class GamePlayState : State, IMessageHandle
         GameInstance.gameEvent.OnBossDie += OnBossDie;
         GameInstance.gameEvent.OnAlienDie += OnAlienDie;
 
+        timeCounter = new TimeCounter();
+        timeCounter.OnEveryTotalSecondsCount = OnEveryTotalSecondsPassed;
+        timeCounter.OnCounterStart = OnCounterStart;
+        timeCounter.OnCounterEnd = OnCounterEnd;
+        //timeCounter.OnEveryMinutesCount = OnEveryMinutesCount;
+
+
+        timeCounter.StartCounting(0, 300);
         gameStateData = DataController.GameStateData;
 
     }
@@ -96,21 +109,37 @@ public class GamePlayState : State, IMessageHandle
         MessageManager.RemoveSubcriber(TeeMessageType.OnPlayerDie, this);
     }
 
+    private void OnCounterStart()
+    {
+        //AlienProperties.addtionalPowerByMinutes = DataFactory.GetAddtionalPowerByMinute(0);
+    }
+
+    private void OnCounterEnd()
+    {
+        alienController.StopSpawning();
+    }
+
     private void OnEveryTotalSecondsPassed(int totalSeconds)
     {
         //int timelineIndex = DataFactory.GetTimelineIndex(gameStateData.currentChapter, totalSeconds);
-        //gameStateData.currentTotalSeconds = totalSeconds;
+        int timelineIndex = 3;
+        // gameStateData.currentTotalSeconds = totalSeconds;
 
         //CheckAndSpawnBossWarning(totalSeconds);
-        //if (timelineIndex != currentTimelineIndex) // change wave
-        // {
-        //     currentTimelineIndex = timelineIndex;
-        //     alienController.ChangeZombieType(timelineIndex);
-        //     alienController.CheckSpawnSpeed(timelineIndex);
-        //     alienController.CheckEvent(timelineIndex);
-        //     alienController.ChangeNumberOfAlienPerSpawn(timelineIndex);
-        //     GameInstance.gameEvent.OnWaveChange?.Invoke();
-        // }
-        // gamePlayUI.SetTime(totalSeconds);
+        if (timelineIndex != currentTimelineIndex) // change wave
+        {
+            currentTimelineIndex = timelineIndex;
+            //alienController.ChangeZombieType(timelineIndex);
+            //alienController.CheckSpawnSpeed(timelineIndex);
+            //alienController.CheckEvent(timelineIndex);
+            alienController.ChangeNumberOfAlienPerSpawn(timelineIndex);
+            //GameInstance.gameEvent.OnWaveChange?.Invoke();
+        }
+        gamePlayUI.SetTime(totalSeconds);
+    }
+    private void OnEveryMinutesCount(int minutes)
+    {
+        //AlienProperties.addtionalPowerByMinutes = DataFactory.GetAddtionalPowerByMinute(minutes);
+        //currentMinutes = minutes;
     }
 }

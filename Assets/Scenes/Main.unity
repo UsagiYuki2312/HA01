@@ -287,6 +287,7 @@ GameObject:
   - component: {fileID: 404111247}
   - component: {fileID: 404111246}
   - component: {fileID: 404111245}
+  - component: {fileID: 404111248}
   m_Layer: 0
   m_Name: GameInstance
   m_TagString: Untagged
@@ -313,6 +314,7 @@ MonoBehaviour:
   floatingJoystick: {fileID: 0}
   skillJoytickPanel: {fileID: 0}
   cinemachineCamera: {fileID: 255080091}
+  numberOfActiveAliens: 0
 --- !u!114 &404111246
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -339,6 +341,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &404111248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 404111244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aaf0ccb40c0850941ba22c41fa13238a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &681401560
 GameObject:
   m_ObjectHideFlags: 3

@@ -24,12 +24,14 @@ public class SPlayerSkillController : MonoBehaviour
     public GameObject spin;
     public SDirectionLine line;
     public SkillController skillController;
+     public UnityAction<float> OnCharacterRecovery;
 
     private void Start()
     {
         skillPanel = SGameInstance.Instance.skillJoytickPanel;
         skillController = new SkillController();
         skillController.Init();
+        StartCoroutine(RecoveryRoutine());
     }
 
     public void CreatePanel(RectTransform createZone)
@@ -66,7 +68,7 @@ public class SPlayerSkillController : MonoBehaviour
         if (dir.sqrMagnitude < 0.1f) return false;
 
         rotateAngleFirstSkill = Mathf.Atan2(newDir.x, newDir.y) * Mathf.Rad2Deg;
-        Debug.Log("rotateAngleFirstSkill: " + rotateAngleFirstSkill);
+        //Debug.Log("rotateAngleFirstSkill: " + rotateAngleFirstSkill);
         if (rotateAngleFirstSkill < 0) rotateAngleFirstSkill += 360;
         line.transform.eulerAngles = Vector3.forward * -rotateAngleFirstSkill;
         return true;
@@ -94,7 +96,6 @@ public class SPlayerSkillController : MonoBehaviour
 
     public void SpawnBullet()
     {
-        // GameObject bullet = Instantiate(spin, transform.position, Quaternion.identity);
         Instantiate(spin, line.gameObject.transform.position, line.gameObject.transform.rotation);
     }
 
@@ -201,5 +202,27 @@ public class SPlayerSkillController : MonoBehaviour
     {
         StopCoroutine(skillCo);
         actionCoolDown?.Invoke();
+    }
+
+    private IEnumerator RecoveryRoutine()
+    {
+        float recoveryAmount;
+        while (true)
+        {
+            if (SGameInstance.Instance.player.playerProperties.health < SGameInstance.Instance.player.playerProperties.maxHealth)
+            {
+                recoveryAmount = 1f;
+                Recover(recoveryAmount);
+                Debug.Log("Healing");
+            }
+            yield return new WaitForSeconds(2f);
+        }
+    }
+
+    public void Recover(float amount)
+    {
+        SGameInstance.Instance.player.playerProperties.health += amount;
+        SGameInstance.Instance.player.playerProperties.health = Mathf.Clamp(SGameInstance.Instance.player.playerProperties.health, 0, SGameInstance.Instance.player.playerProperties.maxHealth);
+        OnCharacterRecovery?.Invoke(SGameInstance.Instance.player.playerProperties.health);
     }
 }
