@@ -549,6 +549,7 @@ MonoBehaviour:
   movementComponent: {fileID: 5401200731317407557}
   skillComponent: {fileID: 7121973604050912535}
   playerRigid: {fileID: 0}
+  playerGause: {fileID: 0}
   follower: {fileID: 0}
   alienSensor: {fileID: 0}
 --- !u!114 &5401200731317407557

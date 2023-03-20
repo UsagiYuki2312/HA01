@@ -1,16 +1,7 @@
 fileFormatVersion: 2
-guid: 920850cb0d62ea842978c1603e1a86c3
+guid: 5cd86af91473d9a4c99771620e3c2a84
 TextureImporter:
-  internalIDToNameTable:
-  - first:
-      213: -5619898039434451017
-    second: Sasuke_0
-  - first:
-      213: -3032207741342595012
-    second: Sasuke_1
-  - first:
-      213: -7969863302680641786
-    second: Sasuke_2
+  internalIDToNameTable: []
   externalObjects: {}
   serializedVersion: 12
   mipmaps:
@@ -50,10 +41,10 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
-  alignment: 0
+  alignment: 7
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
@@ -111,70 +102,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites:
-    - serializedVersion: 2
-      name: Sasuke_0
-      rect:
-        serializedVersion: 2
-        x: 6
-        y: 3247
-        width: 27
-        height: 58
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7b76895328c1202b0800000000000000
-      internalID: -5619898039434451017
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Sasuke_1
-      rect:
-        serializedVersion: 2
-        x: 45
-        y: 3247
-        width: 27
-        height: 58
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c38c514ef1f6be5d0800000000000000
-      internalID: -3032207741342595012
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Sasuke_2
-      rect:
-        serializedVersion: 2
-        x: 84
-        y: 3247
-        width: 27
-        height: 58
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 60f7c476d8b556190800000000000000
-      internalID: -7969863302680641786
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
+    sprites: []
     outline: []
     physicsShape: []
     bones: []

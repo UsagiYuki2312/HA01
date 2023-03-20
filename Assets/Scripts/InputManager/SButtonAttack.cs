@@ -6,11 +6,13 @@ using UnityEngine.EventSystems;
 
 public class SButtonAttack : Button
 {
+
     // Start is called before the first frame update
     public override void OnPointerDown(PointerEventData eventData)
     {
         base.OnPointerDown(eventData);
         SGameInstance.Instance.buttonAttackController.OnClickAttackButton();
+
     }
 
     // Button is released

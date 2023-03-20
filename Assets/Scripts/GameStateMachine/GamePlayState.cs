@@ -45,9 +45,9 @@ public class GamePlayState : State, IMessageHandle
     private void Awake()
     {
         gamePlayUI = Resources.Load<SGamePlayUI>(UI_PATH + "GamePlay");
-        pauseMenu  = Resources.Load<SPauseMenu>(UI_PATH + "PauseMenu");
-        player = Resources.Load<SPlayer>(PLAYER_PATH + "Player");
-        wall = Resources.Load<GameObject>(WALL_PATH + "Wall");
+        pauseMenu = Resources.Load<SPauseMenu>(UI_PATH + "PauseMenu");
+        player = Resources.Load<SPlayer>(PLAYER_PATH + "Sasuke");
+        // wall = Resources.Load<GameObject>(WALL_PATH + "Wall");
         boss = Resources.Load<GameObject>(BOSS_PATH + "Boss");
 
         MessageManager.AddSubcriber(TeeMessageType.OnPauseButtonClicked, this);
@@ -68,7 +68,7 @@ public class GamePlayState : State, IMessageHandle
         SGameInstance.Instance.player = Instantiate(player);
         yield return new WaitForSeconds(1f);
         SGameInstance.Instance.player.SetupDependencies(DataController.GameStateData, gamePlayUI.playerGause);
-        wall = Instantiate(wall);
+        // wall = Instantiate(wall);
         SGameInstance.Instance.cinemachineCamera.Follow = SGameInstance.Instance.player.transform;
 
         alienController = new AlienController(player.transform);

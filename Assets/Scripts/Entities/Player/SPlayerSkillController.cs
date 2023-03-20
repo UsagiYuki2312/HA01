@@ -24,8 +24,10 @@ public class SPlayerSkillController : MonoBehaviour
     public GameObject spin;
     public SDirectionLine line;
     public SkillController skillController;
-     public UnityAction<float> OnCharacterRecovery;
-
+    public UnityAction<float> OnCharacterRecovery;
+    public UnityAction<bool> OnCharacterUseSkill;
+    public float timeCountPerAttack;
+    public Animator animator;
     private void Start()
     {
         skillPanel = SGameInstance.Instance.skillJoytickPanel;
@@ -59,6 +61,7 @@ public class SPlayerSkillController : MonoBehaviour
         {
             ResetCoolDown(firstSkillCo, skillPanel.joystickControllers[0].OnResetCoolDown);
         }
+        timeCountPerAttack += Time.deltaTime;
 
     }
 
@@ -101,9 +104,14 @@ public class SPlayerSkillController : MonoBehaviour
 
     public void UseNormalAttack()
     {
-        SGameInstance.Instance.gameEvent.OnPlayerUseSkill?.Invoke();
-        skillController.UseNormalAttack(transform.position, transform.rotation);
-        Debug.Log("UseNormalAttack");
+        if (timeCountPerAttack > 0.5f)
+        {
+            SGameInstance.Instance.gameEvent.OnPlayerUseSkill?.Invoke();
+            skillController.UseNormalAttack(transform.position, transform.rotation);
+            AnimationAttack(OnPlayAttackAnim());
+            Debug.Log("UseNormalAttack");
+            timeCountPerAttack = 0;
+        }
     }
     public void UseFirstSkill()
     {
@@ -115,13 +123,25 @@ public class SPlayerSkillController : MonoBehaviour
     public void UseSecondSkill()
     {
         SGameInstance.Instance.gameEvent.OnPlayerUseSkill?.Invoke();
-        skillController.UseSecondSkill(MiniumVector(dirSeconndSkill), line.gameObject.transform.rotation);
+        Vector3 dir = MiniumVector(dirSeconndSkill);
+        skillController.UseSecondSkill(dir, line.gameObject.transform.rotation);
         secondSkillCo = (CoutCoolDown(skillPanel.joystickControllers[1].OnCoolDown, skillController.GetSecondSkillCoolDown()));
+
+        if (dir.x > 0)
+        {
+            transform.localScale = new Vector3(1, 1, 1);
+        }
+        if (dir.x < 0)
+        {
+            transform.localScale = new Vector3(-1, 1, 1);
+        }
         StartCoroutine(secondSkillCo);
+        AnimationAttack(OnPlaySecondSkillAnim());
     }
     public void UseThirdSkill()
     {
         SGameInstance.Instance.gameEvent.OnPlayerUseSkill?.Invoke();
+         AnimationAttack(OnPlayThirdSkillAnim());
         //skillController.UseThirdSkill(line.gameObject.transform.position, line.gameObject.transform.rotation);
     }
 
@@ -224,5 +244,50 @@ public class SPlayerSkillController : MonoBehaviour
         SGameInstance.Instance.player.playerProperties.health += amount;
         SGameInstance.Instance.player.playerProperties.health = Mathf.Clamp(SGameInstance.Instance.player.playerProperties.health, 0, SGameInstance.Instance.player.playerProperties.maxHealth);
         OnCharacterRecovery?.Invoke(SGameInstance.Instance.player.playerProperties.health);
+    }
+
+    private void AnimationAttack(IEnumerator skill)
+    {
+
+        StartCoroutine(skill);
+    }
+    IEnumerator OnPlayAttackAnim()
+    {
+        OnCharacterUseSkill?.Invoke(false);
+        animator.Play("Attack");
+        yield return new WaitForSeconds(1.2f);
+        animator.Play("Idle");
+        OnCharacterUseSkill?.Invoke(true);
+
+    }
+
+    IEnumerator OnPlayFistSkillAnim()
+    {
+        OnCharacterUseSkill?.Invoke(false);
+        animator.Play("Attack");
+        yield return new WaitForSeconds(1.2f);
+        animator.Play("Idle");
+        OnCharacterUseSkill?.Invoke(true);
+
+    }
+
+    IEnumerator OnPlaySecondSkillAnim()
+    {
+        OnCharacterUseSkill?.Invoke(false);
+        animator.Play("Dash");
+        yield return new WaitForSeconds(1.2f);
+        animator.Play("Idle");
+        OnCharacterUseSkill?.Invoke(true);
+
+    }
+
+     IEnumerator OnPlayThirdSkillAnim()
+    {
+        OnCharacterUseSkill?.Invoke(false);
+        animator.Play("Ultimate");
+        yield return new WaitForSeconds(1.8f);
+        animator.Play("Idle");
+        OnCharacterUseSkill?.Invoke(true);
+
     }
 }

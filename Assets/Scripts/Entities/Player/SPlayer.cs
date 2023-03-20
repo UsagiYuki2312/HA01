@@ -27,6 +27,7 @@ public class SPlayer : MonoBehaviourCore
         playerRigid = GetComponent<Rigidbody2D>();
         movementComponent.playerProperties = playerProperties;
         skillComponent.OnCharacterRecovery = UpdatePlayerHealth;
+        skillComponent.OnCharacterUseSkill = EnableMovement;
     }
 
     private void Start()
@@ -108,6 +109,14 @@ public class SPlayer : MonoBehaviourCore
             Debug.Log("SetupDependencies health: " + playerProperties.health);
             Debug.Log("SetupDependencies Max health: " + playerProperties.maxHealth);
         }
+    }
+
+    public void EnableMovement(bool isEnable)
+    {
+        // movementComponent.floatingJoystick.gameObject.SetActive(isEnable);
+        movementComponent.enabled = isEnable;
+        //  damageReceiver.isAttackable = isEnable;
+        // skillComponent.enabled = isEnable;
     }
 
 }

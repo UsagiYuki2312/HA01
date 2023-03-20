@@ -10,6 +10,7 @@ public class SPlayerMovementController : MonoBehaviour
     public Animator animator;
     [SerializeField] private Vector2 joyStickDir;
     private Vector3 moveDirection;
+    private Vector3 lastMoveDirection;
     [HideInInspector] public PlayerProperties playerProperties;
     private float countValue;
     private float rotateAngle;
@@ -17,10 +18,10 @@ public class SPlayerMovementController : MonoBehaviour
     public bool isClickGoTo;
     public Vector3 targetGoTo;
     public const string JOYSTICK_PATH = "Prefabs/Joystick/";
-
     public bool isCollidedWithUpWall, isCollidedWithDownWall;
     public bool isCollidedWithLeftWall, isCollidedWithRightWall;
     public bool isCollidedWithObstacle;
+
     private void Start()
     {
         floatingJoystick = SGameInstance.Instance.floatingJoystick;
@@ -37,20 +38,15 @@ public class SPlayerMovementController : MonoBehaviour
         joyStickDir = floatingJoystick.Direction;
         CalculateDirection(joyStickDir);
         isRunning = MoveToDir(moveDirection);
-        // if (isClickGoTo)
-        // {
-        //     GoToTarget(targetGoTo);
-        // }
-        // if (joyStickDir != Vector2.zero)
-        // {
-        //     isClickGoTo = false;
-        // }
+
+        AnimationController();
+
     }
 
     private bool MoveToDir(Vector2 dir)
     {
         if (dir.sqrMagnitude < 0.1f) return false;
-        transform.Translate(dir * playerProperties.speed  * Time.deltaTime, Space.World);
+        transform.Translate(dir * playerProperties.speed * Time.deltaTime, Space.World);
         return true;
     }
 
@@ -138,8 +134,63 @@ public class SPlayerMovementController : MonoBehaviour
     {
         moveDirection = dir;
         moveDirection.z = 0;
-        if (isCollidedWithObstacle && Mathf.Abs(moveDirection.x)>=Mathf.Abs(moveDirection.y)) moveDirection.x = 0;
-        if (isCollidedWithObstacle && Mathf.Abs(moveDirection.x)<Mathf.Abs(moveDirection.y)) moveDirection.y = 0;
+        if (isCollidedWithObstacle && Mathf.Abs(moveDirection.x) >= Mathf.Abs(moveDirection.y)) moveDirection.x = 0;
+        if (isCollidedWithObstacle && Mathf.Abs(moveDirection.x) < Mathf.Abs(moveDirection.y)) moveDirection.y = 0;
+    }
+
+    private enum State
+    {
+        Idle,
+        Run,
+        Attack,
+    }
+    private State state;
+
+    public void SetStateAttack(){
+          state = State.Attack;
+    }
+    private void AnimationController()
+    {
+        if (isRunning == true)
+        {
+
+            if (moveDirection.x > 0)
+            {
+                transform.localScale = new Vector3(1, 1, 1);
+                lastMoveDirection = moveDirection;
+            }
+            if (moveDirection.x < 0)
+            {
+                transform.localScale = new Vector3(-1, 1, 1);
+                lastMoveDirection = moveDirection;
+            }
+            if (state != State.Run)
+            {
+                animator.Play("Run");
+                state = State.Run;
+            }
+        }
+        else
+        {
+            if (state != State.Idle)
+            {
+                if (moveDirection == Vector3.zero)
+                {
+                    if (lastMoveDirection.x > 0)
+                    {
+                        transform.localScale = new Vector3(1, 1, 1);
+                        animator.Play("Idle");
+                    }
+                    if (lastMoveDirection.x < 0)
+                    {
+                        transform.localScale = new Vector3(-1, 1, 1);
+                        animator.Play("Idle");
+                    }
+                }
+                state = State.Idle;
+            }
+
+        }
     }
 
 }

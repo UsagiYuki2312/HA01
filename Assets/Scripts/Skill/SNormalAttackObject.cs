@@ -18,16 +18,20 @@ public class SNormalAttackObject : MonoBehaviour
         alienSensor = SGameInstance.Instance.player.alienSensor;
         damageTrigger = GetComponent<SDamageTrigger>();
         targetPosition = Vector3.zero;
-        damageTrigger.OnAlienTouched = OnAlienTouched;
+        //damageTrigger.OnAlienTouched = OnAlienTouched;
     }
 
 
     protected void Update()
     {
-        target = alienSensor.closestAliens.transform.position;
-        direction = target - transform.position;
-        transform.Translate(direction * speed * Time.deltaTime, Space.World);
-          //TriggerAutoHide();
+        // target = alienSensor.closestAliens.transform.position;
+        // direction = target - transform.position;
+        // transform.Translate(direction * speed * Time.deltaTime, Space.World);
+        //   //TriggerAutoHide();
+        if (gameObject.active == true)
+        {
+            StartCoroutine(OnFinishAttack());
+        }
     }
 
     protected virtual void OnAlienTouched()
@@ -41,5 +45,16 @@ public class SNormalAttackObject : MonoBehaviour
         {
             gameObject.SetActive(false);
         }
+    }
+
+    IEnumerator OnFinishAttack()
+    {
+        yield return new WaitForSeconds(0.5f);
+        FinishAttack();
+    }
+
+    protected virtual void FinishAttack()
+    {
+        gameObject.SetActive(false);
     }
 }

@@ -15,6 +15,8 @@ public class SkillController
 
         skills[0].SpawnSkillObjects();
         skills[0].UpdateCoolDown();
+        skills[1].SpawnSkillObjects();
+        skills[1].UpdateCoolDown();
         skills[2].SpawnSkillObjects();
         skills[2].UpdateCoolDown();
     }
