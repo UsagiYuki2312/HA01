@@ -22,7 +22,7 @@ public class SBullet : MonoBehaviour
     public void TriggerAutoHide()
     {
         float distance = Vector3.Distance(gameObject.transform.position, startPosition);
-        if (distance > 5)
+        if (distance > 8)
         {
             gameObject.SetActive(false);
         }

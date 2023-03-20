@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2129718079029943599}
   - component: {fileID: 4458974152044523806}
   - component: {fileID: 1405891063403129085}
+  - component: {fileID: 1683232553528446364}
   m_Layer: 9
   m_Name: Alien
   m_TagString: Alien
@@ -30,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 983616287708515798}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_Children:
   - {fileID: 6830340065685321035}
   m_Father: {fileID: 0}
@@ -99,7 +100,7 @@ SpriteRenderer:
   m_SortingLayerID: 1976012919
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: -4741554348279970901, guid: 72c64ccd2837b2748bedcb314ad94ee0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a12a6eadb21e3574dabb70e6783e949f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -123,9 +124,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.06508973}
+  m_Offset: {x: -0.13, y: 0.16}
   serializedVersion: 2
-  m_Radius: 0.07
+  m_Radius: 0.16
 --- !u!50 &4458974152044523806
 Rigidbody2D:
   serializedVersion: 4
@@ -167,6 +168,27 @@ MonoBehaviour:
     armor: 0
   defaultSpeed: 8
   rb: {fileID: 4458974152044523806}
+  typeMove: 0
+--- !u!95 &1683232553528446364
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 983616287708515798}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d8747a75bbfebfe4491a677e7097c677, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!1 &3090035228649285333
 GameObject:
   m_ObjectHideFlags: 0
@@ -194,7 +216,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3090035228649285333}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.055, y: 0.284, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 983616287708515795}
@@ -232,7 +254,7 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: -0.09}
-  m_Size: {x: 0.3, y: 0.14}
+  m_Size: {x: 0.34, y: 0.14}
   m_Direction: 0
 --- !u!50 &6941734160715672423
 Rigidbody2D:

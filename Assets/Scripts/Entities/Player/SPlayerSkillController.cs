@@ -141,8 +141,10 @@ public class SPlayerSkillController : MonoBehaviour
     public void UseThirdSkill()
     {
         SGameInstance.Instance.gameEvent.OnPlayerUseSkill?.Invoke();
-         AnimationAttack(OnPlayThirdSkillAnim());
-        //skillController.UseThirdSkill(line.gameObject.transform.position, line.gameObject.transform.rotation);
+        AnimationAttack(OnPlayThirdSkillAnim());
+        skillController.UseThirdSkill(transform.position + new Vector3(0, 1, 0), line.gameObject.transform.rotation);
+        thirdSkillCo = (CoutCoolDown(skillPanel.joystickControllers[2].OnCoolDown, skillController.GetThirdSkillCoolDown()));
+        StartCoroutine(thirdSkillCo);
     }
 
     public void LoadFirstSkill()
@@ -281,7 +283,7 @@ public class SPlayerSkillController : MonoBehaviour
 
     }
 
-     IEnumerator OnPlayThirdSkillAnim()
+    IEnumerator OnPlayThirdSkillAnim()
     {
         OnCharacterUseSkill?.Invoke(false);
         animator.Play("Ultimate");

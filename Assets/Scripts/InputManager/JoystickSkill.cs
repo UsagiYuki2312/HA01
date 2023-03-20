@@ -18,7 +18,6 @@ public class JoystickSkill : FixedJoystick
     public override void OnPointerUp(PointerEventData eventData)
     {
         pressUp?.Invoke();
-        Debug.Log("OnPointerUp Skill: " + Direction);
         dir = Direction;
         base.OnPointerUp(eventData);
     }

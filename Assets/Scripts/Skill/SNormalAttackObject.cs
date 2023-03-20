@@ -11,6 +11,7 @@ public class SNormalAttackObject : MonoBehaviour
     private Vector3 targetPosition;
     private Vector3 direction;
     public float speed;
+    public float duration;
 
     protected virtual void Awake()
     {
@@ -49,7 +50,7 @@ public class SNormalAttackObject : MonoBehaviour
 
     IEnumerator OnFinishAttack()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(duration);
         FinishAttack();
     }
 

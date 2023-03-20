@@ -11,7 +11,7 @@ public class NormalSkill : ActiveSkill
     public NormalSkill() : base()
     {
         skillType = SkillType.NormalAttack;
-        normalAttackPrefabs = Resources.Load<SNormalAttackObject>("Prefabs/Skill/AiriSkill/" + "NormalAttackBullet");
+        normalAttackPrefabs = Resources.Load<SNormalAttackObject>("Prefabs/Skill/SasukeSkill/" + "NormalAttackBullet");
         normalAttackPool = new UDynamicPool<SNormalAttackObject>(normalAttackPrefabs, new Vector3(0, -10, 0), 5, 100);
     }
 

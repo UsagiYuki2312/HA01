@@ -10,6 +10,9 @@ public class SMovement : MonoBehaviourCore
     public float defaultSpeed;
     public Rigidbody2D rb;
     public int typeMove;
+    public Animator anim;
+
+
 
     void Start()
     {
@@ -22,10 +25,15 @@ public class SMovement : MonoBehaviourCore
             if (typeMove == 2)
             {
                 //StartCoroutine(MoveAroundPlayer());
-                StartCoroutine(MoveAroundPlayerForRange());
-                //StartCoroutine(AttackPlayer());
+                //StartCoroutine(MoveAroundPlayerForRange());
+                StartCoroutine(MoveForwardToPlayer());
+                StartCoroutine(AttackPlayer());
             }
-            //if()
+            if (typeMove == 3)
+            {
+                StartCoroutine(MoveAroundPlayerForRange());
+                StartCoroutine(ShootPlayer());
+            }
 
         }
     }
@@ -168,7 +176,27 @@ public class SMovement : MonoBehaviourCore
     {
         while (true)
         {
-            rb.velocity = MiniumVector(SGameInstance.Instance.player.transform.position - transform.position) * characterProperties.speed;
+            Vector3 dirMove = MiniumVector(SGameInstance.Instance.player.transform.position - transform.position);
+            if (dirMove.x > 0)
+            {
+                transform.localScale = new Vector3(1, 1, 1) * 3;
+            }
+            if (dirMove.x < 0)
+            {
+                transform.localScale = new Vector3(-1, 1, 1) * 3;
+            }
+
+            if (Vector2.Distance(transform.position, SGameInstance.Instance.player.transform.position) < 1f)
+            {
+                rb.velocity = -dirMove * characterProperties.speed;
+            }
+            if (Vector2.Distance(transform.position, SGameInstance.Instance.player.transform.position) > 3f)
+            {
+                rb.velocity = dirMove * characterProperties.speed;
+            }
+
+
+
             yield return new WaitForSeconds(Random.Range(1f, 1.5f));
         }
 
@@ -181,10 +209,27 @@ public class SMovement : MonoBehaviourCore
             if (Vector2.Distance(transform.position, SGameInstance.Instance.player.transform.position) > 10f)
             {
                 rb.velocity = MiniumVector(SGameInstance.Instance.player.transform.position - transform.position) * characterProperties.speed;
+
+                if (rb.velocity.x > 0)
+                {
+                    transform.localScale = new Vector3(1, 1, 1) * 3;
+                }
+                if (rb.velocity.x < 0)
+                {
+                    transform.localScale = new Vector3(-1, 1, 1) * 3;
+                }
             }
-            if (Vector2.Distance(transform.position, SGameInstance.Instance.player.transform.position) < 4f)
+            if (Vector2.Distance(transform.position, SGameInstance.Instance.player.transform.position) < 2f)
             {
                 rb.velocity = MiniumVector(transform.position - SGameInstance.Instance.player.transform.position) * characterProperties.speed * 0.7f;
+                if (rb.velocity.x > 0)
+                {
+                    transform.localScale = new Vector3(1, 1, 1) * 3;
+                }
+                if (rb.velocity.x < 0)
+                {
+                    transform.localScale = new Vector3(-1, 1, 1) * 3;
+                }
                 Vector2 targetPosition = (Vector2)(SGameInstance.Instance.player.transform.position) + Random.insideUnitCircle * 3f;
             }
 
@@ -211,43 +256,47 @@ public class SMovement : MonoBehaviourCore
         }
     }
 
-    // private IEnumerator AttackPlayer()
-    // {
-    //     while (true)
-    //     {
-    //         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, attackRange);
-    //         foreach (Collider2D collider in colliders)
-    //         {
-    //             if (collider.CompareTag("Player"))
-    //             {
-    //                 Debug.Log("Enemy attacking player");
-    //                 yield return new WaitForSeconds(attackCooldown);
-    //                 break;
-    //             }
-    //         }
+    private IEnumerator AttackPlayer()
+    {
+        while (true)
+        {
+            Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 1);
+            foreach (Collider2D collider in colliders)
+            {
+                if (collider.CompareTag("Player"))
+                {
+                    anim.Play("Attack");
+                    Debug.Log("Enemy attacking player");
+                    yield return new WaitForSeconds(1f);
+                    anim.Play("Run");
+                    yield return new WaitForSeconds(2f);
+                    break;
+                }
+            }
 
-    //         yield return null;
-    //     }
-    // }
+            yield return null;
+        }
+    }
+
+    private IEnumerator ShootPlayer()
+    {
+        while (true)
+        {
+            Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 6);
+            foreach (Collider2D collider in colliders)
+            {
+                if (collider.CompareTag("Player"))
+                {
+                    anim.Play("Attack");
+                    yield return new WaitForSeconds(1f);
+                    anim.Play("Run");
+                    yield return new WaitForSeconds(2f);
+                    break;
+                }
+            }
+
+            yield return null;
+        }
+    }
 }
 
-
-// public class EnemyController : MonoBehaviour
-// {
-//     public float moveSpeed = 3f;
-//     public float attackCooldown = 2f;
-//     public float attackRange = 1f;
-
-//     private Transform player;
-//     private Rigidbody2D rb;
-
-//     private void Start()
-//     {
-//         player = GameObject.FindGameObjectWithTag("Player").transform;
-//         rb = GetComponent<Rigidbody2D>();
-
-//         StartCoroutine(MoveAroundPlayer());
-//         StartCoroutine(AttackPlayer());
-//     }
-
-// }

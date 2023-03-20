@@ -7,6 +7,7 @@ public class AlienSpawner : ClassInstanceCore
     public Transform target;
     private UDynamicPool<SAlien> alienPool;
     private UDynamicPool<SMeleeAlien> meleeAlienPool;
+    private UDynamicPool<SRangeAlien> rangeAlienPool;
     public Coroutine spawningRoutine;
     private GameStateData currentStateData;
     private object spawnDelay;
@@ -19,11 +20,12 @@ public class AlienSpawner : ClassInstanceCore
     public int numberOfAliensSpawned;
     private int maxNumberOfActiveAliens;
 
-    public AlienSpawner(Transform target, UDynamicPool<SAlien> alienPool, UDynamicPool<SMeleeAlien> meleeAlienPool, float spawnSpeed)
+    public AlienSpawner(Transform target, UDynamicPool<SAlien> alienPool, UDynamicPool<SMeleeAlien> meleeAlienPool, UDynamicPool<SRangeAlien> rangeAlienPool, float spawnSpeed)
     {
         this.target = target;
         this.alienPool = alienPool;
         this.meleeAlienPool = meleeAlienPool;
+        this.rangeAlienPool = rangeAlienPool;
         this.spawnSpeed = spawnSpeed;
         spawnDelay = new WaitForSeconds(spawnSpeed);
         spawnCrowdDelayEachWave = new WaitForSeconds(4);
@@ -94,7 +96,7 @@ public class AlienSpawner : ClassInstanceCore
         while (true)
         {
             if (GameInstance.numberOfActiveAliens <= maxNumberOfActiveAliens)
-                for (int i = 0; i < 3; i++)
+                for (int i = 0; i <= 3; i++)
                 {
                     int type = i;
                     switch (type)
@@ -108,7 +110,8 @@ public class AlienSpawner : ClassInstanceCore
                             meleeAlien.gameObject.SetActive(true);
                             break;
                         case 3:
-                            Debug.Log("Spawn Range Enymy");
+                              SRangeAlien rangeAlien = GetAlienFromPool(ref rangeAlienPool, 2);
+                            rangeAlien.gameObject.SetActive(true);
                             break;
                         default:
                             break;
