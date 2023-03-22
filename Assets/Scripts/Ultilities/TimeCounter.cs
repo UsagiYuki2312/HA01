@@ -13,6 +13,8 @@ public class TimeCounter : ClassInstanceCore
     public UnityAction OnCounterEnd;
     private Coroutine timeCountingCoroutine;
     private int minutes;
+    private int secondBuff;
+    private int second20Buff;
     private int seconds;
     private int totalSeconds;
     private int endSeconds;
@@ -24,6 +26,8 @@ public class TimeCounter : ClassInstanceCore
         this.minutes = (int)totalSeconds / 60;
         this.seconds = totalSeconds % 60;
         this.endSeconds = endSeconds;
+        this.secondBuff = totalSeconds % 60;
+        this.second20Buff = (int)totalSeconds / 20;
         timeCountingCoroutine = StartCoroutine(CountTime());
     }
 
@@ -32,6 +36,8 @@ public class TimeCounter : ClassInstanceCore
         this.seconds = 0;
         this.totalSeconds = 0;
         this.minutes = 0;
+        this.secondBuff = 0;
+        this.second20Buff = 0;
         this.endSeconds = endSeconds;
         timeCountingCoroutine = StartCoroutine(CountTime());
     }
@@ -54,12 +60,20 @@ public class TimeCounter : ClassInstanceCore
             OnEverySecondsCount?.Invoke(seconds);
             OnEveryTotalSecondsCount?.Invoke(totalSeconds);
             seconds++;
+            secondBuff++;
             totalSeconds++;
             if (seconds > 59)
             {
                 seconds = 0;
-                OnEveryMinutesCount?.Invoke(minutes);
+                //OnEveryMinutesCount?.Invoke(minutes);
                 minutes++;
+            }
+            if (secondBuff > 19)
+            {
+                secondBuff = 0;
+                Debug.Log("secondBuff: " + second20Buff);
+                OnEveryMinutesCount?.Invoke(second20Buff);
+                second20Buff++;
             }
             yield return delaySecond;
         }

@@ -63,7 +63,6 @@ public class GamePlayState : State, IMessageHandle
     IEnumerator RunLoading()
     {
         //AsyncOperation operation = SceneManager.LoadSceneAsync("Level1");
-        yield return new WaitForSeconds(1f);
         gamePlayUI = Instantiate(gamePlayUI);
         SGameInstance.Instance.player = Instantiate(player);
         yield return new WaitForSeconds(1f);
@@ -84,7 +83,7 @@ public class GamePlayState : State, IMessageHandle
         timeCounter.OnEveryTotalSecondsCount = OnEveryTotalSecondsPassed;
         timeCounter.OnCounterStart = OnCounterStart;
         timeCounter.OnCounterEnd = OnCounterEnd;
-        //timeCounter.OnEveryMinutesCount = OnEveryMinutesCount;
+        timeCounter.OnEveryMinutesCount = OnEveryMinutesCount;
 
 
         timeCounter.StartCounting(0, 300);
@@ -111,7 +110,7 @@ public class GamePlayState : State, IMessageHandle
 
     private void OnCounterStart()
     {
-        //AlienProperties.addtionalPowerByMinutes = DataFactory.GetAddtionalPowerByMinute(0);
+        AlienProperties.addtionalPowerByMinutes = DataFactory.GetAddtionalPowerByMinute(0);
     }
 
     private void OnCounterEnd()
@@ -122,7 +121,8 @@ public class GamePlayState : State, IMessageHandle
     private void OnEveryTotalSecondsPassed(int totalSeconds)
     {
         //int timelineIndex = DataFactory.GetTimelineIndex(gameStateData.currentChapter, totalSeconds);
-        int timelineIndex = 3;
+        int timelineIndex = totalSeconds / 20;
+        //gameStateData.currentTotalSeconds = totalSeconds;
         // gameStateData.currentTotalSeconds = totalSeconds;
 
         //CheckAndSpawnBossWarning(totalSeconds);
@@ -131,15 +131,15 @@ public class GamePlayState : State, IMessageHandle
             currentTimelineIndex = timelineIndex;
             //alienController.ChangeZombieType(timelineIndex);
             //alienController.CheckSpawnSpeed(timelineIndex);
-            //alienController.CheckEvent(timelineIndex);
+            alienController.CheckEvent(timelineIndex);
             alienController.ChangeNumberOfAlienPerSpawn(timelineIndex);
-            //GameInstance.gameEvent.OnWaveChange?.Invoke();
         }
         gamePlayUI.SetTime(totalSeconds);
     }
     private void OnEveryMinutesCount(int minutes)
     {
-        //AlienProperties.addtionalPowerByMinutes = DataFactory.GetAddtionalPowerByMinute(minutes);
+        AlienProperties.addtionalPowerByMinutes = DataFactory.GetAddtionalPowerByMinute(minutes);
+        Debug.Log("Power UP");
         //currentMinutes = minutes;
     }
 }

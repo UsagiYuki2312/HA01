@@ -41,10 +41,16 @@ public class SBoss : SAlien
     }
     protected IEnumerator SkillCoroutine()
     {
-        while (true)
+
+        while (alienProperties.health > 100)
         {
-            UseSkill();
-            yield return new WaitForSeconds(2f);
+            anim.Play("Idle");
+            movement.enabled = false;
+            alienSkillController.UseSkillBoss();
+            yield return new WaitForSeconds(3f);
+            anim.Play("Run");
+            movement.enabled = true;
+            yield return new WaitForSeconds(10f);
         }
     }
 
@@ -184,5 +190,10 @@ public class SBoss : SAlien
                         0.01f;
 
         movement.defaultSpeed = alienProperties.speed;
+    }
+    protected override void SettingSAlien()
+    {
+        base.SettingSAlien();
+        movement.typeMove = 0;
     }
 }

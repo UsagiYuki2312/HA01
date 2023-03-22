@@ -68,9 +68,9 @@ public class AlienSpawner : ClassInstanceCore
 
     IEnumerator SpawnAliensInCrowd()
     {
-        for (int i = 0; i < 100; i++)
+        for (int i = 0; i < 10; i++)
         {
-            SAlien alien = GetAlienFromPool(ref alienPool, 1);
+            SMeleeAlien alien = GetAlienFromPool(ref meleeAlienPool, 1);
             alien.gameObject.SetActive(true);
             yield return spawnCrowdDelay;
         }

@@ -1292,4 +1292,4 @@ MonoBehaviour:
   midHealth: {fileID: 21300000, guid: c923f61f8afae0d42b56d339c26d128f, type: 3}
   lowHealth: {fileID: 21300000, guid: c923f61f8afae0d42b56d339c26d128f, type: 3}
   updatePosition: 1
-  offsetY: 320
+  offsetY: 220

@@ -8,21 +8,26 @@ public class SkillBossController
     public void Init()
     {
         skills = new List<ActiveSkill>();
-
+        skills.Add(new FireBallSkill());
+        skills.Add(new HacCauSkill());
+        skills.Add(new HoaDonSkill());
+        skills.Add(new AmaterasuSkill());
         skills[0].SpawnSkillObjects();
         skills[0].UpdateCoolDown();
+        skills[1].SpawnSkillObjects();
+        skills[1].UpdateCoolDown();
+        skills[2].SpawnSkillObjects();
+        skills[2].UpdateCoolDown();
+        skills[3].SpawnSkillObjects();
+        skills[3].UpdateCoolDown();
     }
-    public void UseFirstSkill(Vector3 position, Quaternion rotation)
+    public void UseMeleeSkilll(Vector3 position, Quaternion rotation)
     {
         skills[0].UseSkill(position, rotation);
     }
-    public void UseSecondSkill(Vector3 position, Quaternion rotation)
+    public void UseRangeSkill(Vector3 position, Quaternion rotation)
     {
-        skills[1].UseSkill(position, rotation);
-    }
-    public void UseThirdSkill(Vector3 position, Quaternion rotation)
-    {
-        skills[2].UseSkill(position, rotation);
+        skills[0].UseSkill(position, rotation);
     }
     public float GetFirstSkillCoolDown()
     {
@@ -32,8 +37,16 @@ public class SkillBossController
     {
         return skills[1].baseCooldown;
     }
-    public float GetThirdSkillCoolDown()
+
+    public void UseHacCauItachiSkill(Vector3 position, Quaternion rotation)
     {
-        return skills[2].baseCooldown;
+        skills[1].UseSkill(position, rotation);
+    }
+    public void UseHoaDonItachiSkill(Vector3 position, Quaternion rotation)
+    {
+        skills[2].UseSkill(position, rotation);
+    }public void UseAmaretasuItachiSkill(Vector3 position, Quaternion rotation)
+    {
+        skills[3].UseSkill(position, rotation);
     }
 }

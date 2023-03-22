@@ -22,7 +22,7 @@ public class AlienEventSpawner : ClassInstanceCore
         SPursuingMovement alienMovement = (SPursuingMovement)alien.movement;
         alienMovement.target = target;
         alien.ChangeType(type);
-        //alien.transform.position = ground.GetAlienSpawnPosition(target.transform.position, 10);
+        alien.transform.position = GetAlienSpawnPosition(target.transform.position, 5);
         return alien;
     }
 
@@ -58,6 +58,7 @@ public class AlienEventSpawner : ClassInstanceCore
         }
         else
         {
+            Debug.Log("Spawn Boss");
             SpawnBossWithDelay(boss, type, delay, isLastBoss);
         }
     }
@@ -69,5 +70,15 @@ public class AlienEventSpawner : ClassInstanceCore
         {
             GameInstance.gameEvent.OnBossDie?.Invoke(boss);
         }
+    }
+
+    public Vector3 GetAlienSpawnPosition(Vector3 orition, float range)
+    {
+        Vector3[] directions = new Vector3[720];
+        for (int i = 0; i < directions.Length; i++)
+        {
+            directions[i] = Quaternion.Euler(0, i * 0.5f, 0) * Vector3.forward;
+        }
+        return orition + directions[UnityEngine.Random.Range(0, directions.Length)] * range;
     }
 }

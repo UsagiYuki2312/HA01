@@ -6,13 +6,13 @@ public class SFireBall : MonoBehaviour
 {
     public float speed; Vector3 dir;
     private Vector3 startPosition;
+    public SDamagePlayer damagePlayer;
     protected virtual void Awake()
     {
-        speed = 10;
     }
     protected virtual void Update()
     {
-        transform.Translate(transform.up * speed * Time.deltaTime, Space.World);
+        transform.Translate(transform.right * speed * Time.deltaTime, Space.World);
         TriggerAutoHide();
     }
     public void TriggerAutoHide()

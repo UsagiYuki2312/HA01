@@ -233,7 +233,7 @@ public class SPlayerSkillController : MonoBehaviour
         {
             if (SGameInstance.Instance.player.playerProperties.health < SGameInstance.Instance.player.playerProperties.maxHealth)
             {
-                recoveryAmount = 1f;
+                recoveryAmount = 30f;
                 Recover(recoveryAmount);
                 Debug.Log("Healing");
             }

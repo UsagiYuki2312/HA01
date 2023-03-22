@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FireBallSkill : ActiveSkill
+public class FireBallSkill : ActiveSkill //Alien Skill
 {
     private SFireBall spinPrefabs;
     private UDynamicPool<SFireBall> bulletPool;
     private SFireBall choosenBullet;
     public FireBallSkill() : base()
     {
-        spinPrefabs = Resources.Load<SFireBall>("Prefabs/Skill/AiriSkill/" + "SpinEnemy");
+        spinPrefabs = Resources.Load<SFireBall>("Prefabs/Skill/AlienSkill/" + "FireBall");
         bulletPool = new UDynamicPool<SFireBall>(spinPrefabs, new Vector3(0, -10, 0), 6, 10);
         iconSkill = Resources.Load<Texture>("Textures/Skill/" + "11");
     }

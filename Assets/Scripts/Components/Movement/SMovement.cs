@@ -11,28 +11,29 @@ public class SMovement : MonoBehaviourCore
     public Rigidbody2D rb;
     public int typeMove;
     public Animator anim;
-
+    public SAlienSkillController alienSkillController;
 
 
     void Start()
     {
         if (isMovable)
         {
+            if (typeMove == 0)
+            {
+                StartCoroutine(MoveForwardToPlayerForBoss());
+            }
             if (typeMove == 1)
             {
                 StartCoroutine(MoveForwardToPlayer());
             }
             if (typeMove == 2)
             {
-                //StartCoroutine(MoveAroundPlayer());
-                //StartCoroutine(MoveAroundPlayerForRange());
                 StartCoroutine(MoveForwardToPlayer());
                 StartCoroutine(AttackPlayer());
             }
             if (typeMove == 3)
             {
                 StartCoroutine(MoveAroundPlayerForRange());
-                StartCoroutine(ShootPlayer());
             }
 
         }
@@ -40,17 +41,6 @@ public class SMovement : MonoBehaviourCore
 
     protected virtual void Update()
     {
-        // if (isMovable)
-        // {
-        //     if (typeMove == 1)
-        //     {
-        //         rb.velocity = MiniumVector(SGameInstance.Instance.player.transform.position - transform.position) * characterProperties.speed;
-        //     }
-        //     if (typeMove == 2)
-        //     {
-        //         Debug.Log("Melee Walking");
-        //     }
-        // MoveToPlayer(SGameInstance.Instance.player.transform.position - transform.position);
 
     }
 
@@ -63,17 +53,18 @@ public class SMovement : MonoBehaviourCore
 
     public void OnSpeedUpTriggered()
     {
-        // defaultSpeed = characterProperties.speed;
-        characterProperties.speed = 20f;
+        defaultSpeed = characterProperties.speed;
+        //characterProperties.speed = 20f;
     }
 
-    public void OnSlowdownFinished()
+    public void OnStopFinished()
     {
         characterProperties.speed = defaultSpeed;
     }
 
     public void OnStopMovement()
     {
+        defaultSpeed = characterProperties.speed;
         characterProperties.speed = 0;
     }
 
@@ -155,13 +146,24 @@ public class SMovement : MonoBehaviourCore
         {
             if (Vector2.Distance(transform.position, SGameInstance.Instance.player.transform.position) > 5f)
             {
-                rb.velocity = MiniumVector(SGameInstance.Instance.player.transform.position - transform.position) * characterProperties.speed;
+                Vector3 dirMoveToPlayer = MiniumVector(SGameInstance.Instance.player.transform.position - transform.position);
+                if (dirMoveToPlayer.x > 0)
+                {
+                    transform.localScale = new Vector3(1, 1, 1) * 3;
+                }
+                if (dirMoveToPlayer.x < 0)
+                {
+                    transform.localScale = new Vector3(-1, 1, 1) * 3;
+                }
+                rb.velocity = dirMoveToPlayer * characterProperties.speed;
+
             }
             else
             {
                 Vector2 targetPosition = (Vector2)(SGameInstance.Instance.player.transform.position) + Random.insideUnitCircle * 3f;
                 while (Vector2.Distance(transform.position, targetPosition) > 0.5f && Vector2.Distance(transform.position, SGameInstance.Instance.player.transform.position) < 5f)
                 {
+                    FlipLocalScale(((Vector3)(targetPosition) - transform.position));
                     rb.MovePosition(Vector2.MoveTowards(transform.position, targetPosition, characterProperties.speed * Time.deltaTime * 5));
                     yield return null;
                 }
@@ -206,31 +208,29 @@ public class SMovement : MonoBehaviourCore
     {
         while (true)
         {
-            if (Vector2.Distance(transform.position, SGameInstance.Instance.player.transform.position) > 10f)
-            {
-                rb.velocity = MiniumVector(SGameInstance.Instance.player.transform.position - transform.position) * characterProperties.speed;
+            rb.velocity = MiniumVector(SGameInstance.Instance.player.transform.position - transform.position) * characterProperties.speed;
 
-                if (rb.velocity.x > 0)
-                {
-                    transform.localScale = new Vector3(1, 1, 1) * 3;
-                }
-                if (rb.velocity.x < 0)
-                {
-                    transform.localScale = new Vector3(-1, 1, 1) * 3;
-                }
-            }
-            if (Vector2.Distance(transform.position, SGameInstance.Instance.player.transform.position) < 2f)
+            if (rb.velocity.x > 0)
             {
-                rb.velocity = MiniumVector(transform.position - SGameInstance.Instance.player.transform.position) * characterProperties.speed * 0.7f;
-                if (rb.velocity.x > 0)
+                transform.localScale = new Vector3(1, 1, 1) * 3;
+            }
+            if (rb.velocity.x < 0)
+            {
+                transform.localScale = new Vector3(-1, 1, 1) * 3;
+            }
+
+
+            Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 10);
+            foreach (Collider2D collider in colliders)
+            {
+                if (collider.CompareTag("Player"))
                 {
-                    transform.localScale = new Vector3(1, 1, 1) * 3;
+                    anim.Play("Attack");
+                    alienSkillController.UseRangeSkill();
+                    yield return new WaitForSeconds(1f);
+                    anim.Play("Run");
+                    break;
                 }
-                if (rb.velocity.x < 0)
-                {
-                    transform.localScale = new Vector3(-1, 1, 1) * 3;
-                }
-                Vector2 targetPosition = (Vector2)(SGameInstance.Instance.player.transform.position) + Random.insideUnitCircle * 3f;
             }
 
 
@@ -240,7 +240,7 @@ public class SMovement : MonoBehaviourCore
 
     private IEnumerator MoveOut(Vector3 positionMove)
     {
-        while (true)
+        while (Vector2.Distance(transform.position, positionMove) <= 0.3f)
         {
             if (Vector2.Distance(transform.position, positionMove) <= 0.3f)
                 rb.velocity = MiniumVector(transform.position - positionMove) * characterProperties.speed;
@@ -287,16 +287,60 @@ public class SMovement : MonoBehaviourCore
             {
                 if (collider.CompareTag("Player"))
                 {
+                    //OnStopMovement();
                     anim.Play("Attack");
+                    //alienSkillController.UseRangeSkill(transform.position, transform.rotation);
                     yield return new WaitForSeconds(1f);
                     anim.Play("Run");
-                    yield return new WaitForSeconds(2f);
+                    //OnStopFinished();
                     break;
                 }
             }
 
             yield return null;
         }
+    }
+
+    public void FlipLocalScale(Vector3 dir)
+    {
+        if (dir.x > 0)
+        {
+            transform.localScale = new Vector3(1, 1, 1) * 3;
+        }
+        if (dir.x < 0)
+        {
+            transform.localScale = new Vector3(-1, 1, 1) * 3;
+        }
+    }
+
+    private IEnumerator MoveForwardToPlayerForBoss()
+    {
+        while (true)
+        {
+            Vector3 dirMove = MiniumVector(SGameInstance.Instance.player.transform.position - transform.position);
+            if (dirMove.x > 0)
+            {
+                transform.localScale = new Vector3(1, 1, 1) * 3;
+            }
+            if (dirMove.x < 0)
+            {
+                transform.localScale = new Vector3(-1, 1, 1) * 3;
+            }
+
+            if (Vector2.Distance(transform.position, SGameInstance.Instance.player.transform.position) < 1f)
+            {
+                rb.velocity = -dirMove * characterProperties.speed;
+            }
+            if (Vector2.Distance(transform.position, SGameInstance.Instance.player.transform.position) > 3f)
+            {
+                rb.velocity = dirMove * characterProperties.speed;
+            }
+
+
+
+            yield return new WaitForSeconds(Random.Range(1f, 1.5f));
+        }
+
     }
 }
 

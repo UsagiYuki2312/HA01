@@ -28,6 +28,7 @@ public class AlienConfig
     public float[] speed;
     public int[] health;
     public float[] damageToPlayer;
+    public int[] addtionalPowerByMinutes;
 }
 
 [System.Serializable]
@@ -109,6 +110,13 @@ public class SDataFactory : Singleton<SDataFactory>
         int index =
                    Mathf.Clamp(type - 1, 0, alienConfig.damageToPlayer.Length - 1);
         return playerConfig.baseSpeed[index];
+    }
+
+    public int GetAddtionalPowerByMinute(int minutes)
+    {
+         int index =
+                   Mathf.Clamp(minutes, 0, alienConfig.addtionalPowerByMinutes.Length - 1);
+        return alienConfig.addtionalPowerByMinutes[minutes];
     }
 
     #region Boss

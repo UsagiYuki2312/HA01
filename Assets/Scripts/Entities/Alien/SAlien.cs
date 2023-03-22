@@ -13,6 +13,9 @@ public class AlienProperties : CharacterProperties
         speed = DataFactory.GetAlienSpeed(type);
         damage = DataFactory.GetDamageToPlayer(type);
         health = DataFactory.GetAlienHealth(type);
+
+        health = health + addtionalPowerByMinutes;
+        damage = damage + addtionalPowerByMinutes;
     }
 }
 
@@ -23,8 +26,9 @@ public class SAlien : MonoBehaviourCore
     public SDpsAttacker characterDps;
     public SMovement movement;
     public DamageReceiver damageReceiver;
-    //public SBaseDpsReceiver[] dpsReceivers;
+    public SAlienSkillController alienSkillController;
     public Vector3 dirMove;
+    public Animator anim;
 
     protected virtual void Reset()
     {

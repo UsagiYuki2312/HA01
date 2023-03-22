@@ -30,7 +30,7 @@ public class AlienController : ClassInstanceCore
         //miniBossPrefab = Resources.Load<SMiniBoss>("MiniBoss");
         meleeAlienPrefab = Resources.Load<SMeleeAlien>("Prefabs/Alien/" + "MeleeAlien");
         rangeAlienPrefab = Resources.Load<SRangeAlien>("Prefabs/Alien/" + "RangeAlien");
-        bossPrefab = Resources.Load<SBoss>("Prefabs/Boss/" + "Boss");
+        bossPrefab = Resources.Load<SBoss>("Prefabs/Boss/" + "BossItachi");
         //linearMoveAlienPrefab = Resources.Load<SAlien>("LinearMoveAlien");
         this.target = target;
 
@@ -49,7 +49,7 @@ public class AlienController : ClassInstanceCore
         bossPool.CreateObjects(4);
 
         alienSpawner = new AlienSpawner(target, alienPool, meleeAlienPool, rangeAlienPool, 1);
-        //alienEventSpawner = new AlienEventSpawner(bossPool, target);
+        alienEventSpawner = new AlienEventSpawner(bossPool, target);
     }
 
     public void ResolveGameStateData()
@@ -72,7 +72,7 @@ public class AlienController : ClassInstanceCore
 
     public void CheckEvent(int timelineIndex)
     {
-        TriggerEvent(1);
+        TriggerEvent(timelineIndex);
     }
 
     public void ChangeNumberOfAlienPerSpawn(int timelineIndex)
@@ -85,12 +85,21 @@ public class AlienController : ClassInstanceCore
     {
         switch (eventID)
         {
+            case 0:
+                alienSpawner.StartSpawnAliensInCrowd();
+                //alienEventSpawner.ControlSpawnBoss(bossPrefab, 0);
+                break;
             case 1:
                 alienSpawner.StartSpawnAliensInCrowd();
                 break;
-            case 8:
-                //GameInstance.gameEvent.OnExplosionSpawned?.Invoke();
-                alienEventSpawner.ControlSpawnBoss(bossPrefab, 1, false, 1);
+            case 2:
+                alienSpawner.StartSpawnAliensInCrowd();
+                break;
+            case 3:
+                alienSpawner.StartSpawnAliensInCrowd();
+                break;
+            case 4:
+                alienEventSpawner.ControlSpawnBoss(bossPrefab, 0);
                 alienSpawner.StopSpawning();
                 GameInstance.gameEvent.OnBossSpawned?.Invoke();
                 break;

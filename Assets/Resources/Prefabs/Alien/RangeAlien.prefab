@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 4663107294997837407}
   - component: {fileID: 1405891063403129085}
   - component: {fileID: 7855806426955406417}
+  - component: {fileID: 1071889313803925998}
   m_Layer: 9
   m_Name: RangeAlien
   m_TagString: Alien
@@ -34,6 +35,7 @@ Transform:
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_Children:
   - {fileID: 6830340065685321035}
+  - {fileID: 8614548296160556614}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -147,6 +149,7 @@ MonoBehaviour:
     addtionalPower: 0
   characterDps: {fileID: 2682632154530012049}
   movement: {fileID: 1405891063403129085}
+  alienSkillController: {fileID: 1071889313803925998}
   dirMove: {x: 0, y: 0, z: 0}
 --- !u!114 &1405891063403129085
 MonoBehaviour:
@@ -170,6 +173,7 @@ MonoBehaviour:
   rb: {fileID: 4458974152044523806}
   typeMove: 0
   anim: {fileID: 7855806426955406417}
+  alienSkillController: {fileID: 1071889313803925998}
 --- !u!95 &7855806426955406417
 Animator:
   serializedVersion: 5
@@ -190,6 +194,21 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+--- !u!114 &1071889313803925998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 983616287708515798}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63a0b2348a6c73a46af8e219f08764a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shootPoint: {fileID: 7578086893148013443}
+  target: {fileID: 0}
+  bulletPrefab: {fileID: 7578086893148013443}
 --- !u!1 &3090035228649285333
 GameObject:
   m_ObjectHideFlags: 0
@@ -278,3 +297,33 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!1 &7578086893148013443
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8614548296160556614}
+  m_Layer: 9
+  m_Name: ShootPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8614548296160556614
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7578086893148013443}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.12, y: 0.3, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 983616287708515795}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
