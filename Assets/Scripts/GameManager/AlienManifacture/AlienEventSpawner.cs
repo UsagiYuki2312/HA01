@@ -31,10 +31,15 @@ public class AlienEventSpawner : ClassInstanceCore
 
         Vector3 position = SGameInstance.Instance.player.transform.position + new Vector3(3, 3, 3);
         boss = GameObject.Instantiate(boss, position, Quaternion.identity);
-        //GameInstance.gameEvent.OnBossHealthBarRegistered?.Invoke(boss);
+        //boss.transform.localScale
+            boss.isLastBoss = isLastBoss;
+        if (isLastBoss)
+        {
+            SGameInstance.Instance.gameEvent.OnBossHealthBarRegistered?.Invoke(boss);
+        }
         boss.ChangeType(type);
         GameInstance.AddAlien(boss);
-        boss.isLastBoss = isLastBoss;
+    
         boss.gameObject.SetActive(true);
         listBoss.Add(boss);
     }

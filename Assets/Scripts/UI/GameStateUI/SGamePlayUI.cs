@@ -21,8 +21,9 @@ public class SGamePlayUI : SGameUI
 
     private void Awake()
     {
-        //bossHealthBarPrefab= Resources.Load<SBossHealthBar>(ResourcePath.UI_PATH + "BossHealthBar/BossHealthBar");
+        bossHealthBarPrefab= Resources.Load<SBossHealthBar>("Prefabs/UI/" + "BossHealthBar/BossHealthBar");
         floatingJoystick = Resources.Load<FixedJoystick>(JOYSTICK_PATH + "Fixed Joystick");
+        
         CreateJoystick(joystickZone);
         skillPanel = Resources.Load<SSkillJoytickPanel>(SKILL_JOYSTICK_PATH + "SkillPanel");
         CreatePanelSkill(skillZone);
@@ -56,6 +57,7 @@ public class SGamePlayUI : SGameUI
 
     private void DestroyBossHealthBar(SBoss boss)
     {
+        
         Destroy(boss.bossHealthBar.gameObject);
     }
 

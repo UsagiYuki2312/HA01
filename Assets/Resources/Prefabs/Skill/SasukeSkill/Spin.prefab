@@ -163,7 +163,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9c06f41fc785de468ec35233ac57f99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  power: 30
+  power: 40
   deadzone: 0
 --- !u!70 &1890469523819863185
 CapsuleCollider2D:

@@ -169,7 +169,7 @@ public class SBoss : SAlien
         movement.enabled = true;
     }
 
-  public void SetupHealthBar(SBossHealthBar bossHealthBar)
+    public void SetupHealthBar(SBossHealthBar bossHealthBar)
     {
         this.bossHealthBar = bossHealthBar;
     }
@@ -177,13 +177,19 @@ public class SBoss : SAlien
     protected override void OnAlienTakeDamage(float damage)
     {
         base.OnAlienTakeDamage(damage);
-        bossHealthBar.SetValue(alienProperties.health);
+        if (isLastBoss)
+        {
+            bossHealthBar.SetValue(alienProperties.health);
+        }
     }
 
     protected override void OnAlienDie()
     {
         base.OnAlienDie();
-        GameInstance.gameEvent.OnBossDefeated?.Invoke(this);
+        if (isLastBoss)
+        {
+            GameInstance.gameEvent.OnBossDefeated?.Invoke(this);
+        }
     }
 
     public override void ChangeType(int type)
@@ -194,10 +200,12 @@ public class SBoss : SAlien
         alienProperties.damage = DataFactory.GetPlayerBaseHealth()
                 * DataFactory.GetBossCollisionDamageMultiple() *
                         0.01f;
-
         movement.defaultSpeed = alienProperties.speed;
-           bossHealthBar.SetMaxValue(alienProperties.health);
-        bossHealthBar.SetValue(alienProperties.health);
+        if (isLastBoss)
+        {
+            bossHealthBar.SetMaxValue(alienProperties.health);
+            bossHealthBar.SetValue(alienProperties.health);
+        }
     }
     protected override void SettingSAlien()
     {
