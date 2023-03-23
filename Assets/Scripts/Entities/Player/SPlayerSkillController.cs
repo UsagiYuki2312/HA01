@@ -28,6 +28,7 @@ public class SPlayerSkillController : MonoBehaviour
     public UnityAction<bool> OnCharacterUseSkill;
     public float timeCountPerAttack;
     public Animator animator;
+    public PlayerProperties playerProperties;
     private void Start()
     {
         skillPanel = SGameInstance.Instance.skillJoytickPanel;
@@ -109,7 +110,6 @@ public class SPlayerSkillController : MonoBehaviour
             SGameInstance.Instance.gameEvent.OnPlayerUseSkill?.Invoke();
             skillController.UseNormalAttack(transform.position, transform.rotation);
             AnimationAttack(OnPlayAttackAnim());
-            Debug.Log("UseNormalAttack");
             timeCountPerAttack = 0;
         }
     }
@@ -149,7 +149,7 @@ public class SPlayerSkillController : MonoBehaviour
 
     public void LoadFirstSkill()
     {
-        skillPanel.joystickControllers[0].imageSkill.texture = skillController.skills[0].iconSkill;
+       // skillPanel.joystickControllers[0].imageSkill.texture = skillController.skills[0].iconSkill;
     }
 
     public Vector3 ConvertVector(Vector3 dir)
@@ -233,9 +233,8 @@ public class SPlayerSkillController : MonoBehaviour
         {
             if (SGameInstance.Instance.player.playerProperties.health < SGameInstance.Instance.player.playerProperties.maxHealth)
             {
-                recoveryAmount = 30f;
+                recoveryAmount = 20f;
                 Recover(recoveryAmount);
-                Debug.Log("Healing");
             }
             yield return new WaitForSeconds(2f);
         }

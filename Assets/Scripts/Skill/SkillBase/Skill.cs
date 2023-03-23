@@ -22,7 +22,7 @@ public class Skill
         isHidden = true;
     }
 
-    public virtual void UpdatePower()
+    public virtual void UpdatePower(int damage=0)
     {
         power = 10;
     }

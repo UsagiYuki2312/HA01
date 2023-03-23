@@ -30,6 +30,7 @@ public class HoaDonSkill : ActiveSkill
         choosenBullet = bulletPool.GetObject();
         choosenBullet.transform.position = position;
         choosenBullet.transform.rotation = rotation;
+                choosenBullet.damagePlayer.power = power;
         choosenBullet.gameObject.SetActive(true);
     }
 
@@ -40,5 +41,9 @@ public class HoaDonSkill : ActiveSkill
     public override void UpdateCoolDown()
     {
         base.UpdateCoolDown();
+    }
+      public override void UpdatePower(int damage =0 )
+    {
+        power = damage;
     }
 }

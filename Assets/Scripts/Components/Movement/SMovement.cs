@@ -266,7 +266,6 @@ public class SMovement : MonoBehaviourCore
                 if (collider.CompareTag("Player"))
                 {
                     anim.Play("Attack");
-                    Debug.Log("Enemy attacking player");
                     yield return new WaitForSeconds(1f);
                     anim.Play("Run");
                     yield return new WaitForSeconds(2f);

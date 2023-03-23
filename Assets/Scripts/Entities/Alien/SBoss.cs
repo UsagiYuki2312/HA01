@@ -9,6 +9,7 @@ public class SBoss : SAlien
     private Action OnMovementDelayEnd;
     public bool isLastBoss;
     private FireBallSkill fireBallSkill;
+    public SBossHealthBar bossHealthBar;
     public Vector3 startingPosition;
     private GameStateData gameStateData;
     private GameStateData GameStateData
@@ -168,10 +169,15 @@ public class SBoss : SAlien
         movement.enabled = true;
     }
 
+  public void SetupHealthBar(SBossHealthBar bossHealthBar)
+    {
+        this.bossHealthBar = bossHealthBar;
+    }
+
     protected override void OnAlienTakeDamage(float damage)
     {
         base.OnAlienTakeDamage(damage);
-        //bossHealthBar.SetValue(alienProperties.health);
+        bossHealthBar.SetValue(alienProperties.health);
     }
 
     protected override void OnAlienDie()
@@ -190,6 +196,8 @@ public class SBoss : SAlien
                         0.01f;
 
         movement.defaultSpeed = alienProperties.speed;
+           bossHealthBar.SetMaxValue(alienProperties.health);
+        bossHealthBar.SetValue(alienProperties.health);
     }
     protected override void SettingSAlien()
     {

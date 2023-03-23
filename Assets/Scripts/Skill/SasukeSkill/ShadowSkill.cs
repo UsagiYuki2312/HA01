@@ -11,7 +11,7 @@ public class ShadowSkill : ActiveSkill
     public ShadowSkill() : base()
     {
         skillType = SkillType.SecondSkill;
-        iconSkill = Resources.Load<Texture>("Textures/Skill/" + "27");
+        iconSkill = Resources.Load<Texture>("Textures/Player/Sasuke" + "282");
         normalAttackPrefabs = Resources.Load<SNormalAttackObject>("Prefabs/Skill/SasukeSkill/" + "NormalAttackBullet");
         normalAttackPool = new UDynamicPool<SNormalAttackObject>(normalAttackPrefabs, new Vector3(0, -10, 0), 5, 100);
     }

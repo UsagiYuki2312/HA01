@@ -15,7 +15,7 @@ public class SpinSkill : ActiveSkill
         skillType = SkillType.FirstSkill;
         spinPrefabs = Resources.Load<SBullet>("Prefabs/Skill/SasukeSkill/" + "Spin");
         bulletPool = new UDynamicPool<SBullet>(spinPrefabs, new Vector3(0, -10, 0), 5, 100);
-        iconSkill = Resources.Load<Texture>("Textures/Skill/" + "11");
+        iconSkill = Resources.Load<Texture>("Textures/Player/Sasuke" + "420");
     }
     public override void SpawnSkillObjects()
     {

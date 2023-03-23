@@ -86,7 +86,7 @@ public class GamePlayState : State, IMessageHandle
         timeCounter.OnEveryMinutesCount = OnEveryMinutesCount;
 
 
-        timeCounter.StartCounting(0, 300);
+        timeCounter.StartCounting(0, 600);
         gameStateData = DataController.GameStateData;
 
     }
@@ -98,6 +98,15 @@ public class GamePlayState : State, IMessageHandle
 
     private void OnBossDie(SBoss bossObject)
     {
+        if (!bossObject.isLastBoss)
+        {
+            alienController.StartSpawning();
+            return;
+        }
+        else
+        {
+            this.SetTimeScale(0);
+        }
         Next();
     }
 
@@ -116,6 +125,7 @@ public class GamePlayState : State, IMessageHandle
     private void OnCounterEnd()
     {
         alienController.StopSpawning();
+        MessageManager.SendMessage(new Message(TeeMessageType.OnPlayerDie));
     }
 
     private void OnEveryTotalSecondsPassed(int totalSeconds)

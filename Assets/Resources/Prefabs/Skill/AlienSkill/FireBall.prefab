@@ -179,4 +179,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
-  damagePlayer: {fileID: 0}
+  damagePlayer: {fileID: 927310352601353626}

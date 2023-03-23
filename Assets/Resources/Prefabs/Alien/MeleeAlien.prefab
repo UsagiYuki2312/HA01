@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 3134379094521452488}
   - component: {fileID: 1405891063403129085}
   - component: {fileID: 7855806426955406417}
+  - component: {fileID: 4091417221108294283}
   m_Layer: 9
   m_Name: MeleeAlien
   m_TagString: Alien
@@ -34,6 +35,7 @@ Transform:
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_Children:
   - {fileID: 6830340065685321035}
+  - {fileID: 5754830611593486542}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -147,8 +149,9 @@ MonoBehaviour:
     addtionalPower: 0
   characterDps: {fileID: 2682632154530012049}
   movement: {fileID: 1405891063403129085}
-  alienSkillController: {fileID: 0}
+  alienSkillController: {fileID: 4091417221108294283}
   dirMove: {x: 0, y: 0, z: 0}
+  anim: {fileID: 0}
 --- !u!114 &1405891063403129085
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -192,6 +195,31 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+--- !u!114 &4091417221108294283
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 983616287708515798}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63a0b2348a6c73a46af8e219f08764a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shootPoint: {fileID: 7973615712376609693}
+  dirSkill: {fileID: 0}
+  rigidbody: {fileID: 4458974152044523806}
+  anim: {fileID: 7855806426955406417}
+  movement: {fileID: 1405891063403129085}
+  properties:
+    level: 0
+    health: 0
+    speed: 0
+    damage: 0
+    armor: 0
+    exp: 0
+    addtionalPower: 0
 --- !u!1 &3090035228649285333
 GameObject:
   m_ObjectHideFlags: 0
@@ -243,6 +271,7 @@ MonoBehaviour:
     speed: 0
     damage: 0
     armor: 0
+  power: 20
 --- !u!70 &1405057576551826155
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -280,3 +309,33 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!1 &7973615712376609693
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5754830611593486542}
+  m_Layer: 9
+  m_Name: ShootPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5754830611593486542
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7973615712376609693}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 983616287708515795}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

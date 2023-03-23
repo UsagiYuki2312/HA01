@@ -138,13 +138,13 @@ public class SPlayerMovementController : MonoBehaviour
         if (isCollidedWithObstacle && Mathf.Abs(moveDirection.x) < Mathf.Abs(moveDirection.y)) moveDirection.y = 0;
     }
 
-    private enum State
+    public enum State
     {
         Idle,
         Run,
         Attack,
     }
-    private State state;
+    public State state;
 
     public void SetStateAttack(){
           state = State.Attack;

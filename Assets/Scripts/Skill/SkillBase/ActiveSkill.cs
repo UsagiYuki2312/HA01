@@ -57,7 +57,7 @@ public class ActiveSkill : Skill
     public virtual void UseSkill(Vector3 position, Quaternion rotation)
     {
     }
-        public override void UpdatePower()
+        public override void UpdatePower(int damage = 0)
     {
         power = Player.playerProperties.Damage;
     }

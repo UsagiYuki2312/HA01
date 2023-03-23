@@ -91,35 +91,52 @@ public class AlienController : ClassInstanceCore
                 break;
             case 1:
                 alienSpawner.StartSpawnAliensInCrowd();
+                alienSpawner.StartSpawnMeleeAliensInCrowd();
+                alienEventSpawner.ControlSpawnBoss(bossPrefab, 0);
                 break;
             case 2:
                 alienSpawner.StartSpawnAliensInCrowd();
+                alienSpawner.StartSpawnRangeAliensInCrowd();
                 break;
             case 3:
-                alienSpawner.StartSpawnAliensInCrowd();
+                alienEventSpawner.ControlSpawnBoss(bossPrefab, 0, true);
                 break;
             case 4:
-                alienEventSpawner.ControlSpawnBoss(bossPrefab, 0);
-                alienSpawner.StopSpawning();
+                alienSpawner.StartSpawnRangeAliensInCrowd();
+                alienSpawner.StartSpawnMeleeAliensInCrowd();
+                break;
+            case 5:
+                alienSpawner.StartSpawnAliensInCrowd();
+                alienSpawner.StartSpawnRangeAliensInCrowd();
+                alienSpawner.StartSpawnMeleeAliensInCrowd();
+                break;
+            case 6:
+                alienEventSpawner.ControlSpawnBoss(bossPrefab, 0, true);
+                //alienSpawner.StopSpawning();
                 GameInstance.gameEvent.OnBossSpawned?.Invoke();
                 break;
             case 9:
-                //GameInstance.gameEvent.OnExplosionSpawned?.Invoke();
-                alienEventSpawner.ControlSpawnBoss(bossPrefab, 0, false, 1);
-                alienSpawner.StopSpawning();
-                GameInstance.gameEvent.OnBossSpawned?.Invoke();
+                alienSpawner.StartSpawnAliensInCrowd();
                 break;
             case 10:
-                //GameInstance.gameEvent.OnExplosionSpawned?.Invoke();
-                alienEventSpawner.ControlSpawnBoss(bossPrefab, 0, false, 1);
-                alienSpawner.StopSpawning();
-                GameInstance.gameEvent.OnBossSpawned?.Invoke();
+                alienSpawner.StartSpawnAliensInCrowd();
+                break;
+            case 11:
+                alienSpawner.StartSpawnAliensInCrowd();
+                break;
+            case 12:
+                alienSpawner.StartSpawnAliensInCrowd();
                 break;
             case 13:
-                //GameInstance.gameEvent.OnExplosionSpawned?.Invoke();
-                alienEventSpawner.ControlSpawnBoss(bossPrefab, 5, true, 1);
-                alienSpawner.StopSpawning();
-                GameInstance.gameEvent.OnBossSpawned?.Invoke();
+                alienSpawner.StartSpawnAliensInCrowd();
+                break;
+            case 14:
+                alienSpawner.StartSpawnAliensInCrowd();
+                break;
+            case 15:
+                // alienEventSpawner.ControlSpawnBoss(bossPrefab, 0, true, 1);
+                // alienSpawner.StopSpawning();
+                // GameInstance.gameEvent.OnBossSpawned?.Invoke();
                 break;
             default:
                 break;

@@ -8,13 +8,19 @@ public class SAlienSkillController : MonoBehaviour
     private Vector3 directionSkill;
     public GameObject shootPoint;
     public GameObject dirSkill;
-    Rigidbody2D rigidbody;
+    public Rigidbody2D rigidbody;
+    public Animator anim;
+    public SMovement movement;
+    public AlienProperties properties;
     // Start is called before the first frame update
     void Start()
     {
         rigidbody = GetComponent<Rigidbody2D>();
         skillController = new SkillBossController();
         skillController.Init();
+        skillController.UpdatePowerSkill(1,300);
+        skillController.UpdatePowerSkill(2,200);
+        skillController.UpdatePowerSkill(3,20);
     }
 
     public void UseMeleeSkilll(Vector3 position, Quaternion rotation)
@@ -28,13 +34,10 @@ public class SAlienSkillController : MonoBehaviour
 
     public void UseSkillBoss()
     {
-        int typeSkill = Random.Range(0, 3);
+        int typeSkill = Random.Range(1, 4);
         switch (typeSkill)
         {
 
-            case 0:
-                StartCoroutine(AimPlayer());
-                break;
 
             case 1:
                 StartCoroutine(FirePlayer());
@@ -43,7 +46,6 @@ public class SAlienSkillController : MonoBehaviour
             case 2:
                 StartCoroutine(ShootBallPlayer());
                 break;
-
             case 3:
                 StartCoroutine(AmaretasuPlayer());
                 break;
@@ -51,100 +53,63 @@ public class SAlienSkillController : MonoBehaviour
         }
     }
 
+    Vector2 directionAim;
+    Quaternion rotationAim;
 
     public void Update()
     {
-        Vector2 direction = SGameInstance.Instance.player.transform.position - transform.position;
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        Quaternion rotation = Quaternion.Euler(new Vector3(0, 0, angle));
-        shootPoint.transform.rotation = rotation;
+        directionAim = SGameInstance.Instance.player.transform.position - transform.position;
+        float angle = Mathf.Atan2(directionAim.y, directionAim.x) * Mathf.Rad2Deg;
+        rotationAim = Quaternion.Euler(new Vector3(0, 0, angle));
+        shootPoint.transform.rotation = rotationAim;
 
-        // if (Input.GetButtonDown("Fire1"))
-        // {
-        //     GameObject bullet = Instantiate(bulletPrefab, shootPoint.transform.position, shootPoint.transform.rotation);
-        //     bullet.GetComponent<Rigidbody2D>().velocity = transform.right * 10;
-        // }
     }
 
     #region Skill for boss
-    IEnumerator AimPlayer()
-    {
-        Vector3 direction = Vector3.zero;
-        float wait = 0;
-        while (wait <= 2)
-        {
-            if (dirSkill.transform.localScale.y < 3)
-            {
-                dirSkill.transform.localScale += new Vector3(0, 0.2f, 0);
-            }
-            direction = SGameInstance.Instance.player.transform.position - transform.position;
-            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90;
-            Quaternion rotation = Quaternion.Euler(new Vector3(0, 0, angle));
-            dirSkill.transform.rotation = rotation;
-
-            yield return new WaitForSeconds(0.2f);
-            wait += 0.2f;
-        }
-        yield return new WaitForSeconds(1f);
-        dirSkill.transform.localScale = new Vector3(0.5f, 0, 0);
-        rigidbody.velocity = (direction * 3);
-
-    }
-
     IEnumerator ShootBallPlayer()
     {
-        Vector3 direction = Vector3.zero;
+        movement.enabled = false;
         float wait = 0;
         while (wait <= 2)
         {
-            if (dirSkill.transform.localScale.x < 3)
-            {
-                dirSkill.transform.localScale += new Vector3(0.2f, 0, 0);
-            }
-            direction = SGameInstance.Instance.player.transform.position - transform.position;
-            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            Quaternion rotation = Quaternion.Euler(new Vector3(0, 0, angle));
-            dirSkill.transform.rotation = rotation;
-
-            yield return new WaitForSeconds(0.2f);
+            dirSkill.gameObject.SetActive(true);
+            dirSkill.transform.rotation = rotationAim;
+            yield return new WaitForSeconds(0.05f);
             wait += 0.2f;
         }
-        yield return new WaitForSeconds(1f);
-        dirSkill.transform.localScale = new Vector3(0, 0.5f, 0);
+        anim.Play("MagicAttack");
+        yield return new WaitForSeconds(0.5f);
+        dirSkill.gameObject.SetActive(false);
         skillController.UseHacCauItachiSkill(transform.position, dirSkill.transform.rotation);
-
+        movement.enabled = true;
     }
 
     IEnumerator FirePlayer()
     {
-        Vector3 direction = Vector3.zero;
+        movement.enabled = false;
         float wait = 0;
         while (wait <= 2)
         {
-            if (dirSkill.transform.localScale.x < 1)
-            {
-                dirSkill.transform.localScale += new Vector3(0.2f, 0, 0);
-            }
-            direction = SGameInstance.Instance.player.transform.position - transform.position;
-            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            Quaternion rotation = Quaternion.Euler(new Vector3(0, 0, angle));
-            dirSkill.transform.rotation = rotation;
-
-            yield return new WaitForSeconds(0.2f);
+            dirSkill.gameObject.SetActive(true);
+            dirSkill.transform.rotation = rotationAim;
+            yield return new WaitForSeconds(0.05f);
             wait += 0.2f;
         }
-        yield return new WaitForSeconds(1f);
-        dirSkill.transform.localScale = new Vector3(0, 0.5f, 0);
+        dirSkill.gameObject.SetActive(false);
+        anim.Play("FireSkill");
+        yield return new WaitForSeconds(0.8f);
         skillController.UseHoaDonItachiSkill(transform.position, dirSkill.transform.rotation);
-
+        movement.enabled = true;
     }
 
     IEnumerator AmaretasuPlayer()
     {
-        yield return new WaitForSeconds(1f);
+        movement.enabled = false;
+        anim.Play("MagicAttack");
+        yield return new WaitForSeconds(0.75f);
         dirSkill.transform.localScale = new Vector3(0, 0.5f, 0);
         skillController.UseAmaretasuItachiSkill(SGameInstance.Instance.player.transform.position, SGameInstance.Instance.player.transform.rotation);
-
+        movement.enabled = true;
     }
     #endregion
 

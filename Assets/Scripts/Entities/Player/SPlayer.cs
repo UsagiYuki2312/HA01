@@ -26,6 +26,7 @@ public class SPlayer : MonoBehaviourCore
         alienSensor = GetComponentInChildren<SAlienSensor>();
         playerRigid = GetComponent<Rigidbody2D>();
         movementComponent.playerProperties = playerProperties;
+        skillComponent.playerProperties = playerProperties;
         skillComponent.OnCharacterRecovery = UpdatePlayerHealth;
         skillComponent.OnCharacterUseSkill = EnableMovement;
     }
@@ -113,10 +114,13 @@ public class SPlayer : MonoBehaviourCore
 
     public void EnableMovement(bool isEnable)
     {
-        // movementComponent.floatingJoystick.gameObject.SetActive(isEnable);
         movementComponent.enabled = isEnable;
-        //  damageReceiver.isAttackable = isEnable;
-        // skillComponent.enabled = isEnable;
+        if (isEnable)
+        {
+            movementComponent.state = SPlayerMovementController.State.Idle;
+        }
+
+
     }
 
 }

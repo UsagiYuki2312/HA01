@@ -45,8 +45,14 @@ public class SkillBossController
     public void UseHoaDonItachiSkill(Vector3 position, Quaternion rotation)
     {
         skills[2].UseSkill(position, rotation);
-    }public void UseAmaretasuItachiSkill(Vector3 position, Quaternion rotation)
+    }
+    public void UseAmaretasuItachiSkill(Vector3 position, Quaternion rotation)
     {
         skills[3].UseSkill(position, rotation);
+    }
+
+    public void UpdatePowerSkill(int type, int damage)
+    {
+        skills[type].UpdatePower(damage);
     }
 }

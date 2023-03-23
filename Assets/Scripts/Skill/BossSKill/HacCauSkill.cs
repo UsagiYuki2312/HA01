@@ -25,6 +25,7 @@ public class HacCauSkill : ActiveSkill
         choosenBullet.transform.position = position;
         choosenBullet.transform.rotation = rotation;
         choosenBullet.gameObject.SetActive(true);
+        choosenBullet.damagePlayer.power = power;
     }
 
     public override void UseSkill(Vector3 position, Quaternion rotation)
@@ -34,5 +35,9 @@ public class HacCauSkill : ActiveSkill
     public override void UpdateCoolDown()
     {
         base.UpdateCoolDown();
+    }
+    public override void UpdatePower(int damage =0 )
+    {
+        power = damage;
     }
 }

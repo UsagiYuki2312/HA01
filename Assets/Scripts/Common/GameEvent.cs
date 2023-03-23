@@ -17,7 +17,7 @@ public class GameEvent
     public UnityAction OnSkillClickedUp;
     public UnityAction OnSpawnFirstSkill;
     public UnityAction OnPlayerUseSkill;
-
+    public UnityAction<SBoss> OnBossHealthBarRegistered;
     public UnityAction<SBoss> OnBossDefeated;
 
 }

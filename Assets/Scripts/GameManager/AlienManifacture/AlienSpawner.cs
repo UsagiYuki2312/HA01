@@ -61,6 +61,16 @@ public class AlienSpawner : ClassInstanceCore
         StartCoroutine(SpawnAliensInCrowd());
     }
 
+    public void StartSpawnMeleeAliensInCrowd()
+    {
+        StartCoroutine(SpawnMeleeAliensInCrowd());
+    }
+
+    public void StartSpawnRangeAliensInCrowd()
+    {
+        StartCoroutine(SpawnRangeAliensInCrowd());
+    }
+
     public void StartSpawnAliensInCrowdByWaves()
     {
         StartCoroutine(SpawnAliensInCrowdByWaves());
@@ -68,9 +78,29 @@ public class AlienSpawner : ClassInstanceCore
 
     IEnumerator SpawnAliensInCrowd()
     {
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < Random.Range(1, 4); i++)
         {
             SMeleeAlien alien = GetAlienFromPool(ref meleeAlienPool, 1);
+            alien.gameObject.SetActive(true);
+            yield return spawnCrowdDelay;
+        }
+    }
+
+    IEnumerator SpawnMeleeAliensInCrowd()
+    {
+        for (int i = 0; i < Random.Range(1, 4); i++)
+        {
+            SAlien alien = GetAlienFromPool(ref alienPool, 1);
+            alien.gameObject.SetActive(true);
+            yield return spawnCrowdDelay;
+        }
+    }
+
+    IEnumerator SpawnRangeAliensInCrowd()
+    {
+        for (int i = 0; i < Random.Range(1, 4); i++)
+        {
+            SRangeAlien alien = GetAlienFromPool(ref rangeAlienPool, 1);
             alien.gameObject.SetActive(true);
             yield return spawnCrowdDelay;
         }
@@ -110,7 +140,7 @@ public class AlienSpawner : ClassInstanceCore
                             meleeAlien.gameObject.SetActive(true);
                             break;
                         case 3:
-                              SRangeAlien rangeAlien = GetAlienFromPool(ref rangeAlienPool, 2);
+                            SRangeAlien rangeAlien = GetAlienFromPool(ref rangeAlienPool, 2);
                             rangeAlien.gameObject.SetActive(true);
                             break;
                         default:

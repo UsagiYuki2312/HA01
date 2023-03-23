@@ -12,6 +12,7 @@ public class LightingSkill : ActiveSkill
     public LightingSkill() : base()
     {
         skillType = SkillType.UltimateSkill;
+         iconSkill = Resources.Load<Texture>("Textures/Player/Sasuke" + "307");
         normalAttackPrefabs = Resources.Load<SNormalAttackObject>("Prefabs/Skill/SasukeSkill/" + "UltimateObject");
         normalAttackPool = new UDynamicPool<SNormalAttackObject>(normalAttackPrefabs, new Vector3(0, -10, 0), 5, 100);
     }

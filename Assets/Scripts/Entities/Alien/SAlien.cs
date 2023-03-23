@@ -50,6 +50,7 @@ public class SAlien : MonoBehaviourCore
         movement.characterProperties = alienProperties;
         movement.typeMove = 1;
         characterDps.characterProperties = alienProperties;
+        alienSkillController.properties = alienProperties;
 
         // for (int i = 0; i < dpsReceivers.Length; i++)
         //     dpsReceivers[i].damageReceiver = damageReceiver;

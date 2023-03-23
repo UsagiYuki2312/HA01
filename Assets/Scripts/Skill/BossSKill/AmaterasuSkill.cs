@@ -29,6 +29,7 @@ public class AmaterasuSkill : ActiveSkill
         choosenBullet = bulletPool.GetObject();
         choosenBullet.transform.position = position;
         choosenBullet.transform.rotation = rotation;
+                choosenBullet.dpsAttacker.power = power;
         choosenBullet.gameObject.SetActive(true);
     }
 

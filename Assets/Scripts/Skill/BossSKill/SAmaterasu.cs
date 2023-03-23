@@ -5,7 +5,7 @@ using UnityEngine;
 public class SAmaterasu : MonoBehaviour
 {
     private float time = 0;
-
+    public SDpsAttacker dpsAttacker;
     protected virtual void Update()
     {
         time += Time.deltaTime;

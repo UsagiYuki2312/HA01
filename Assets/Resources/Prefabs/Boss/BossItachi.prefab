@@ -103,6 +103,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shootPoint: {fileID: 8866150063905328613}
   dirSkill: {fileID: 7084549141160443439}
+  rigidbody: {fileID: 0}
+  anim: {fileID: 9010570529257430735}
+  movement: {fileID: 6290686228491735871}
 --- !u!50 &8281737526298914707
 Rigidbody2D:
   serializedVersion: 4
@@ -259,7 +262,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7997018520300457708
 Transform:
   m_ObjectHideFlags: 0
@@ -269,7 +272,7 @@ Transform:
   m_GameObject: {fileID: 7084549141160443439}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0, y: 0.5, z: 1}
+  m_LocalScale: {x: 0.5, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 4006980490027018361}
   m_RootOrder: 2

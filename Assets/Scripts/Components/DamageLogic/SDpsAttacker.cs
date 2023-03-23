@@ -8,6 +8,7 @@ public class SDpsAttacker : MonoBehaviourCore
     private static DamageReceiver targetDamageReceiver;
     public static bool isAttackable = true;
     private float attackTime;
+    public float power = 5;
 
     private void OnTriggerStay2D(Collider2D other)
     {
@@ -18,7 +19,7 @@ public class SDpsAttacker : MonoBehaviourCore
             {
                 targetDamageReceiver = other.gameObject.GetComponent<SPlayer>().damageReceiver;
             }
-                            targetDamageReceiver.TakeDamage(5);
+            targetDamageReceiver.TakeDamage(power);
             attackTime = Time.time + 0.2f;
         }
     }

@@ -71,7 +71,6 @@ public class TimeCounter : ClassInstanceCore
             if (secondBuff > 19)
             {
                 secondBuff = 0;
-                Debug.Log("secondBuff: " + second20Buff);
                 OnEveryMinutesCount?.Invoke(second20Buff);
                 second20Buff++;
             }
